@@ -24,10 +24,5 @@ steps:
      tag: ${{CF_BRANCH}}
 
 
- after-build:
-      image:  node:latest
-      fail-fast: false
-      commands :
-         - echo 'after build'
 
 
