@@ -18,11 +18,4 @@ steps:
      image-name: containers101/demochat
      tag: ${{CF_BRANCH}}
 
- push to registry:
-     type: push
-     candidate: ${{build-step}}
-     tag: ${{CF_BRANCH}}
-
-
-
 
