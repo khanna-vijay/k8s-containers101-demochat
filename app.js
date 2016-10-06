@@ -259,14 +259,26 @@ function checkForMongoTextSearch() {
     });
 }
 
-mongoose.connect(settings.database.uri, function(err) {
-    if (err) {
-        throw err;
+var connectionTries = 0;
+
+function handleMongoConnectionState(err) {
+    
+    if (err) {       
+        connectionTries++;        
+        if (connectionTries < 3) {
+            console.log('Error connecting to database, will retry: ' + err.toString());
+            setTimeout(tryConnect(), 2000);
+            return;
+        }
+        else {
+            throw err;
+        }
     }
 
     checkForMongoTextSearch();
 
     migroose.needsMigration(function(err, migrationRequired) {
+        
         if (err) {
             console.error(err);
         }
@@ -283,5 +295,10 @@ mongoose.connect(settings.database.uri, function(err) {
         }
 
         startApp();
-    });
-});
+    }
+}
+
+function tryConnect() {                            
+    mongoose.connect(settings.database.uri, handleMongoConnectionState);
+}
+    
