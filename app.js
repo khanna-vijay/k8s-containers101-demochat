@@ -8,40 +8,40 @@ process.title = 'letschat';
 
 require('colors');
 
-var _ = require('lodash'),
-    path = require('path'),
-    fs = require('fs'),
-    express = require('express.oi'),
-    i18n = require('i18n'),
-    bodyParser = require('body-parser'),
+var _            = require('lodash'),
+    path         = require('path'),
+    fs           = require('fs'),
+    express      = require('express.oi'),
+    i18n         = require('i18n'),
+    bodyParser   = require('body-parser'),
     cookieParser = require('cookie-parser'),
-    compression = require('compression'),
-    helmet = require('helmet'),
-    http = require('http'),
-    nunjucks = require('nunjucks'),
-    mongoose = require('mongoose'),
-    migroose = require('./migroose'),
+    compression  = require('compression'),
+    helmet       = require('helmet'),
+    http         = require('http'),
+    nunjucks     = require('nunjucks'),
+    mongoose     = require('mongoose'),
+    migroose     = require('./migroose'),
     connectMongo = require('connect-mongo'),
-    all = require('require-tree'),
-    psjon = require('./package.json'),
-    settings = require('./app/config'),
-    auth = require('./app/auth/index'),
-    core = require('./app/core/index');
+    all          = require('require-tree'),
+    psjon        = require('./package.json'),
+    settings     = require('./app/config'),
+    auth         = require('./app/auth/index'),
+    core         = require('./app/core/index');
 
-var MongoStore = connectMongo(express.session),
-    httpEnabled = settings.http && settings.http.enable,
+var MongoStore   = connectMongo(express.session),
+    httpEnabled  = settings.http && settings.http.enable,
     httpsEnabled = settings.https && settings.https.enable,
-    models = all(path.resolve('./app/models')),
-    middlewares = all(path.resolve('./app/middlewares')),
-    controllers = all(path.resolve('./app/controllers')),
+    models       = all(path.resolve('./app/models')),
+    middlewares  = all(path.resolve('./app/middlewares')),
+    controllers  = all(path.resolve('./app/controllers')),
     app;
 
 //
 // express.oi Setup
 //
 if (httpsEnabled) {
-     app = express().https({
-        key: fs.readFileSync(settings.https.key),
+    app = express().https({
+        key:  fs.readFileSync(settings.https.key),
         cert: fs.readFileSync(settings.https.cert)
     }).io();
 } else {
@@ -56,17 +56,17 @@ if (settings.env === 'production') {
 
 // Session
 var sessionStore = new MongoStore({
-    url: settings.database.uri,
+    url:           settings.database.uri,
     autoReconnect: true
 });
 
 // Session
 var session = {
-    key: 'connect.sid',
-    secret: settings.secrets.cookie,
-    store: sessionStore,
-    cookie: { secure: httpsEnabled },
-    resave: false,
+    key:               'connect.sid',
+    secret:            settings.secrets.cookie,
+    store:             sessionStore,
+    cookie:            { secure: httpsEnabled },
+    resave:            false,
     saveUninitialized: true
 };
 
@@ -85,32 +85,32 @@ app.use(helmet.ieNoOpen());
 app.use(helmet.noSniff());
 app.use(helmet.xssFilter());
 app.use(helmet.hsts({
-    maxAge: 31536000,
+    maxAge:            31536000,
     includeSubdomains: true,
-    force: httpsEnabled,
-    preload: true
+    force:             httpsEnabled,
+    preload:           true
 }));
 app.use(helmet.contentSecurityPolicy({
     defaultSrc: ['\'none\''],
     connectSrc: ['*'],
-    scriptSrc: ['\'self\'', '\'unsafe-eval\''],
-    styleSrc: ['\'self\'', 'fonts.googleapis.com', '\'unsafe-inline\''],
-    fontSrc: ['\'self\'', 'fonts.gstatic.com'],
-    mediaSrc: ['\'self\''],
-    objectSrc: ['\'self\''],
-    imgSrc: ['*']
+    scriptSrc:  ['\'self\'', '\'unsafe-eval\''],
+    styleSrc:   ['\'self\'', 'fonts.googleapis.com', '\'unsafe-inline\''],
+    fontSrc:    ['\'self\'', 'fonts.gstatic.com'],
+    mediaSrc:   ['\'self\''],
+    objectSrc:  ['\'self\''],
+    imgSrc:     ['*']
 }));
 
 var bundles = {};
 app.use(require('connect-assets')({
-    paths: [
+    paths:          [
         'media/js',
         'media/less'
     ],
-    helperContext: bundles,
-    build: settings.env === 'production',
+    helperContext:  bundles,
+    build:          settings.env === 'production',
     fingerprinting: settings.env === 'production',
-    servePath: 'media/dist'
+    servePath:      'media/dist'
 }));
 
 // Public
@@ -121,24 +121,24 @@ app.use('/media', express.static(__dirname + '/media', {
 // Templates
 var nun = nunjucks.configure('templates', {
     autoescape: true,
-    express: app,
-    tags: {
-        blockStart: '<%',
-        blockEnd: '%>',
+    express:    app,
+    tags:       {
+        blockStart:    '<%',
+        blockEnd:      '%>',
         variableStart: '<$',
-        variableEnd: '$>',
-        commentStart: '<#',
-        commentEnd: '#>'
+        variableEnd:   '$>',
+        commentStart:  '<#',
+        commentEnd:    '#>'
     }
 });
 
 function wrapBundler(func) {
     // This method ensures all assets paths start with "./"
     // Making them relative, and not absolute
-    return function() {
+    return function () {
         return func.apply(func, arguments)
-                   .replace(/href="\//g, 'href="./')
-                   .replace(/src="\//g, 'src="./');
+            .replace(/href="\//g, 'href="./')
+            .replace(/src="\//g, 'src="./');
     };
 }
 
@@ -148,7 +148,7 @@ nun.addGlobal('text_search', false);
 
 // i18n
 i18n.configure({
-    directory: __dirname + '/locales',
+    directory:     __dirname + '/locales',
     defaultLocale: settings.i18n && settings.i18n.locale || 'en'
 });
 app.use(i18n.init);
@@ -160,7 +160,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 // IE header
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     res.setHeader('X-UA-Compatible', 'IE=Edge,chrome=1');
     next();
 });
@@ -168,13 +168,13 @@ app.use(function(req, res, next) {
 //
 // Controllers
 //
-_.each(controllers, function(controller) {
+_.each(controllers, function (controller) {
     controller.apply({
-        app: app,
-        core: core,
-        settings: settings,
+        app:         app,
+        core:        core,
+        settings:    settings,
         middlewares: middlewares,
-        models: models,
+        models:      models,
         controllers: controllers
     });
 });
@@ -187,7 +187,7 @@ mongoose.connection.on('error', function (err) {
     throw new Error(err);
 });
 
-mongoose.connection.on('disconnected', function() {
+mongoose.connection.on('disconnected', function () {
     throw new Error('Could not connect to database');
 });
 
@@ -197,17 +197,16 @@ mongoose.connection.on('disconnected', function() {
 
 function startApp() {
     var port = httpsEnabled && settings.https.port ||
-               httpEnabled && settings.http.port;
+        httpEnabled && settings.http.port;
 
     var host = httpsEnabled && settings.https.host ||
-               httpEnabled && settings.http.host || '0.0.0.0';
-
+        httpEnabled && settings.http.host || '0.0.0.0';
 
 
     if (httpsEnabled && httpEnabled) {
         // Create an HTTP -> HTTPS redirect server
         var redirectServer = express();
-        redirectServer.get('*', function(req, res) {
+        redirectServer.get('*', function (req, res) {
             var urlPort = port === 80 ? '' : ':' + port;
             res.redirect('https://' + req.hostname + urlPort + req.path);
         });
@@ -247,11 +246,11 @@ function checkForMongoTextSearch() {
             return;
         }
 
-        if(version[0] < 2) {
+        if (version[0] < 2) {
             return;
         }
 
-        if(version[0] === '2' && version[1] < 6) {
+        if (version[0] === '2' && version[1] < 6) {
             return;
         }
 
@@ -262,12 +261,12 @@ function checkForMongoTextSearch() {
 var connectionTries = 0;
 
 function handleMongoConnectionState(err) {
-    
-    if (err) {       
-        connectionTries++;        
+
+    if (err) {
+        connectionTries++;
         if (connectionTries < 3) {
-            console.log('Error connecting to database, will retry: ' + err.toString());
-            setTimeout(tryConnect(), 2000);
+            console.log('Error connecting to database (will retry in 2 seconds): ' + err.toString());
+            setTimeout(tryConnect, 2000);
             return;
         }
         else {
@@ -277,13 +276,14 @@ function handleMongoConnectionState(err) {
 
     checkForMongoTextSearch();
 
-    migroose.needsMigration(function(err, migrationRequired) {
-        
+    migroose.needsMigration(function (err, migrationRequired) {
+
         if (err) {
             console.error(err);
         }
 
         else if (migrationRequired) {
+
             console.log('Database migration required'.red);
             console.log('Ensure you backup your database first.');
             console.log('');
@@ -295,10 +295,11 @@ function handleMongoConnectionState(err) {
         }
 
         startApp();
-    }
+    });
+
 }
 
-function tryConnect() {                            
+function tryConnect() {
     mongoose.connect(settings.database.uri, handleMongoConnectionState);
 }
-    
+
