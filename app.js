@@ -301,6 +301,8 @@ function handleMongoConnectionState(err) {
 }
 
 function tryConnect() {
+    console.log('Connecting to database...');
     mongoose.connect(settings.database.uri, handleMongoConnectionState);
 }
 
+tryConnect();
