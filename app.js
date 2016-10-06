@@ -293,7 +293,8 @@ function handleMongoConnectionState(err) {
 
             return process.exit();
         }
-
+    
+        console.log('Starting app.');
         startApp();
     });
 
