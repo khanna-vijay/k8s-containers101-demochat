@@ -4,13 +4,21 @@ steps:
   build-step:
     type: build
     dockerfile: Dockerfile
-    image-name: verchol/demochat
+    image-name: container101/demochat
     tag: ${{CF_BRANCH}}
+
+  push to registry:
+      type: push
+      candidate: ${{build-step}}
+      tag: ${{CF_BRANCH}}
+      credentials:
+        username: ${{AWS_USERNAME}}
+        password: ${{AWS_PASSWORD}}
 
   deploy to ecs:
     image: codefresh/cf-deploy-ecs
     commands:
-      - cfecs-update --image-name verchol/demochat --image-tag ${{CF_BRANCH}} eu-west-1 demochat-production demochat-service
+      - cfecs-update --image-name container101/demochat --image-tag ${{CF_BRANCH}} eu-west-1 demochat-production demochat-service
     environment:
       - AWS_ACCESS_KEY_ID=${{AWS_ACCESS_KEY_ID}}
       - AWS_SECRET_ACCESS_KEY=${{AWS_SECRET_ACCESS_KEY}}
