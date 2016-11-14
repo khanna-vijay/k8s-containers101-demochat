@@ -1,4 +1,4 @@
-version: '2.0'
+version: '1.0'
 steps:
  unit-tests:
       image: monostream/nodejs-gulp-bower:latest
