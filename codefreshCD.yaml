@@ -1,0 +1,13 @@
+version: '1.0'
+steps:
+  deploy to ecs:
+    image: codefresh/cf-deploy-ecs
+    commands:
+      - cfecs-update --image-name containers101/demochat --image-tag ${{CF_BRANCH}} eu-west-1 demochat-production demochat-service
+    environment:
+      - AWS_ACCESS_KEY_ID=${{AWS_ACCESS_KEY_ID}}
+      - AWS_SECRET_ACCESS_KEY=${{AWS_SECRET_ACCESS_KEY}}
+    when:
+      branch:
+        only:
+          - staging
