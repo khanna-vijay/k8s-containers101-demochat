@@ -1,20 +1,20 @@
 version: '1.0'
 steps:
- unit-tests:
-      image: monostream/nodejs-gulp-bower:latest
-      fail-fast: false
-      working-directory : ${{initial-clone}}
-      commands:
-        - npm install  
-        #- npm install -g gulp
-        - npm test
-
 
  build-step:
      type: build
      dockerfile: Dockerfile
      image-name: containers101/demochat
      tag: ${{CF_BRANCH}}
+
+ unit-tests:
+      image: ${{build-step}}
+      fail-fast: false
+      working-directory : ${{initial-clone}}
+      commands:
+        - npm install
+        #- npm install -g gulp
+        - npm test
 
  push to registry:
      type: push
