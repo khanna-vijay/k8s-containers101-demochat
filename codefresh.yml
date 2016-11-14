@@ -5,8 +5,8 @@ steps:
       fail-fast: false
       working-directory : ${{initial-clone}}
       commands:
-        - npm install --dev
-        - npm install -g gulp
+        #- npm install --dev
+        #- npm install -g gulp
         - gulp test
         - echo $(date)
 
