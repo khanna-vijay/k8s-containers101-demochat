@@ -24,7 +24,4 @@ steps:
       type: launch-composition
       environmentName: 'env-composition-name'
       composition: demochat-oleg
-      composition-candidates:
-        main:
-          image: nhoag/curl
-          command: bash -c "sleep 20 && curl http://app:5000/" | echo 'works'
+      
