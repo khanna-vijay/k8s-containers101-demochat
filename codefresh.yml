@@ -21,8 +21,9 @@ steps:
      tag: ${{CF_BRANCH}}
 
  demo-chat compositon:
-      type: launch
-        composition: demochat-oleg
+      type: launch-composition
+      environmentName: 'env-composition-name'
+      composition: demochat-oleg
       composition-candidates:
         main:
           image: nhoag/curl
