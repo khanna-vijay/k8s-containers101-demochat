@@ -10,7 +10,7 @@ steps:
  unit-tests:
       image: ${{build-step}}
       fail-fast: false
-      working-directory : ${{initial-clone}}
+      #working-directory : ${{initial-clone}}
       commands:
         #- npm install
         #- npm install -g gulp
