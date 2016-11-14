@@ -7,8 +7,8 @@ steps:
       commands:
         #- npm install --dev
         #- npm install -g gulp
-        - gulp test
-        - echo $(date)
+        - npm test
+
 
  build-step:
      type: build
