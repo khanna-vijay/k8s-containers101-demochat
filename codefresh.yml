@@ -12,7 +12,7 @@ steps:
  build-step:
      type: build
      dockerfile: Dockerfile
-     image-name: containers101/demochat
+     image-name: verchol/demochat
      tag: ${{CF_BRANCH}}
 
  push to registry:
