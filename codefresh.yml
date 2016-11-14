@@ -22,9 +22,12 @@ steps:
      tag: ${{CF_BRANCH}}
 
  demo-chat compositon:
-      type: launch-composition
-      environmentName: 'env-composition-name'
+      type: composition
       composition: demochat-oleg
+      composition-candidates:
+        main:
+          image: nhoag/curl
+          command: bash -c "sleep 20 && curl http://app:5000/" | echo 'works'
 
  deploy to ecs:
      image: codefresh/cf-deploy-ecs
