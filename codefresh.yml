@@ -6,6 +6,7 @@ steps:
       working-directory : ${{initial-clone}}
       commands:
         #- npm install
+        - npm install -g gulp
         - gulp test
         - echo $(date)
 
