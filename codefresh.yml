@@ -12,7 +12,7 @@ steps:
  build-step:
      type: build
      dockerfile: Dockerfile
-     image-name: verchol/demochat
+     image-name: containers101/demochat
      tag: ${{CF_BRANCH}}
 
  push to registry:
@@ -24,4 +24,3 @@ steps:
       type: launch-composition
       environmentName: 'env-composition-name'
       composition: demochat-oleg
-      
