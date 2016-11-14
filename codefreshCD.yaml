@@ -1,5 +1,12 @@
 version: '1.0'
 steps:
+  
+  build-step:
+    type: build
+    dockerfile: Dockerfile
+    image-name: verchol/demochat
+    tag: ${{CF_BRANCH}}
+
   deploy to ecs:
     image: codefresh/cf-deploy-ecs
     commands:
