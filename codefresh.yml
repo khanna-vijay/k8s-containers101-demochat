@@ -1,7 +1,5 @@
-version: '1.0'
+version: '2.0'
 steps:
-
-
  unit-tests:
       image: monostream/nodejs-gulp-bower:latest
       fail-fast: false
@@ -11,10 +9,9 @@ steps:
         - gulp test
         - echo $(date)
 
-
  build-step:
      type: build
-     dockerfile: Dockerfile_prod
+     dockerfile: Dockerfile
      image-name: containers101/demochat
      tag: ${{CF_BRANCH}}
 
@@ -22,7 +19,3 @@ steps:
      type: push
      candidate: ${{build-step}}
      tag: ${{CF_BRANCH}}
-
-
-
-
