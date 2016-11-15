@@ -21,7 +21,7 @@ steps:
      candidate: ${{build-step}}
      tag: ${{CF_BRANCH}}
 
- demo-chat compositon:
+ demo-chat-integration:
       type: composition
       composition: demochat-oleg
       composition-candidates:
