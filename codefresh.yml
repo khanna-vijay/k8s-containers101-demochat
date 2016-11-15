@@ -21,13 +21,13 @@ steps:
      candidate: ${{build-step}}
      tag: ${{CF_BRANCH}}
 
- demo-chat-integration:
-      type: composition
-      composition: demochat-oleg
-      composition-candidates:
-        main:
-          image: nhoag/curl
-          command: bash -c "sleep 20 && curl http://demochat:5000/" | echo 'works'
+ #demo-chat-integration:
+  #    type: composition
+    #  composition: letschat
+     # composition-candidates:
+      #  main:
+       #   image: nhoag/curl
+        #  command: bash -c "sleep 20 && curl http://demochat:5000/" | echo 'works'
 
  deploy to ecs:
      image: codefresh/cf-deploy-ecs
@@ -39,4 +39,4 @@ steps:
      when:
       branch:
         only:
-          - production
+          - master
