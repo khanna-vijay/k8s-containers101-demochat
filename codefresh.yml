@@ -23,7 +23,7 @@ steps:
 
  demo-chat-integration:
       type: composition
-      composition: demochat-oleg
+      composition: letschat
       composition-candidates:
         main:
           image: nhoag/curl
@@ -39,4 +39,4 @@ steps:
      when:
       branch:
         only:
-          - production
+          - master
