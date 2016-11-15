@@ -34,8 +34,10 @@ steps:
      commands:
        - cfecs-update --image-name containers101/demochat --image-tag ${{CF_BRANCH}} eu-west-1 demochat-production demochat-service
      environment:
-       - AWS_ACCESS_KEY_ID=${{AWS_ACCESS_KEY_ID}}
-       - AWS_SECRET_ACCESS_KEY=${{AWS_SECRET_ACCESS_KEY}}
+       - AWS_ACCESS_KEY_ID=AKIAISRGV2FLUTSZJPVQ
+       #${{AWS_ACCESS_KEY_ID}}
+       - AWS_SECRET_ACCESS_KEY=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
+       #${{AWS_SECRET_ACCESS_KEY}}
      when:
       branch:
         only:
