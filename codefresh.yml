@@ -1,13 +1,14 @@
 version: '1.0'
 steps:
 
- build-step:
+ build_step:
      type: build
      dockerfile: Dockerfile
      image-name: containers101/demochat
      tag: ${{CF_BRANCH}}
 
- unit-tests:
+ unit_tests:
+      title: Unit Tests
       image: ${{build-step}}
       fail-fast: false
       #working-directory : ${{initial-clone}}
@@ -16,7 +17,8 @@ steps:
         #- npm install -g gulp
         - npm test
 
- push to registry:
+ push_to_registry:
+     title: Push To Registry
      type: push
      candidate: ${{build-step}}
      tag: ${{CF_BRANCH}}
@@ -29,7 +31,8 @@ steps:
        #   image: nhoag/curl
         #  command: bash -c "sleep 20 && curl http://demochat:5000/" | echo 'works'
 
- deploy to ecs:
+ deploy_to_ecs:
+     title: Deploy Container to ECS
      image: codefresh/cf-deploy-ecs
      commands:
        - cfecs-update --image-name containers101/demochat --image-tag ${{CF_BRANCH}} eu-west-1 demochat-production demochat-service
