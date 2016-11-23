@@ -5,13 +5,13 @@ steps:
      title: Build 
      type: build
      dockerfile: Dockerfile
-     image-name: containers101/demochat
+     image_name: containers101/demochat
      tag: ${{CF_BRANCH}}
 
  unit_tests:
       title: Unit Tests
       image: ${{build_step}}
-      fail-fast: false
+      fail_fast: false
       #working-directory : ${{initial-clone}}
       commands:
         #- npm install
