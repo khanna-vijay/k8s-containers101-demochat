@@ -2,6 +2,7 @@ version: '1.0'
 steps:
 
  build_step:
+     title: Build 
      type: build
      dockerfile: Dockerfile
      image-name: containers101/demochat
@@ -9,7 +10,7 @@ steps:
 
  unit_tests:
       title: Unit Tests
-      image: ${{build-step}}
+      image: ${{build_step}}
       fail-fast: false
       #working-directory : ${{initial-clone}}
       commands:
@@ -20,7 +21,7 @@ steps:
  push_to_registry:
      title: Push To Registry
      type: push
-     candidate: ${{build-step}}
+     candidate: ${{build_step}}
      tag: ${{CF_BRANCH}}
 
  #demo-chat-integration:
