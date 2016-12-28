@@ -31,7 +31,7 @@ xmpp:
     cert: ./server.crt
 
 database:
-  uri: mongodb://mongo:27017/hp_mongo
+  uri: mongodb://192.168.99.101:27017/hp_mongo
 
 secrets:
   cookie: secretsauce

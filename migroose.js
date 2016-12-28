@@ -16,6 +16,7 @@ module.exports = {
     },
 
     needsMigration: function(cb) {
+        return cb(null, false);
         var runner = new Runner(process.cwd(), 'migrootions');
         var migrations = runner.getMigrations();
         var lastMigration = migrations.slice(migrations.length - 1)[0];
