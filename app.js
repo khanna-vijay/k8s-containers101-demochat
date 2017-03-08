@@ -1,5 +1,5 @@
 //
-// Let's Chat
+// Let's Chat main file
 //
 
 'use strict';
