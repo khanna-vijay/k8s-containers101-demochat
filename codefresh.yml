@@ -8,21 +8,36 @@ steps:
      image_name: containers101/demochat
      tag: ${{CF_BRANCH}}
 
- unit_tests:
-      title: Unit Tests
-      image: ${{build_step}}
-      fail_fast: false
+ unit_test:
+      type: composition
+      working_directory: ${{main_clone}}
+      composition:
+          version: '2'
+          services:
+            mongo:
+              image: mongo:latest
+              ports:
+                - 27017
+      composition_candidates:
+          test:
+            image: ${{build_step}}
+            command: gulp test
+
+ #unit_tests:
+ #     title: Unit Tests
+ #     image: ${{build_step}}
+ #     fail_fast: false
       #working-directory : ${{initial-clone}}
-      commands:
+ #     commands:
         #- npm install
         #- npm install -g gulp
-        - npm test
+ #       - npm test
 
- push_to_registry:
-     title: Push To Registry
-     type: push
-     candidate: ${{build_step}}
-     tag: ${{CF_BRANCH}}
+# push_to_registry:
+#     title: Push To Registry
+#     type: push
+#     candidate: ${{build_step}}
+#     tag: ${{CF_BRANCH}}
 
  #demo-chat-integration:
   #    type: composition
