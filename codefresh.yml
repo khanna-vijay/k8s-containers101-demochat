@@ -37,7 +37,7 @@ steps:
    title: Push To ECR
    type: push
    candidate: ${{build_step}}
-   tag: ${{CF_BRANCH}}
+   tag: latest
 
  #demo-chat-integration:
   #    type: composition
