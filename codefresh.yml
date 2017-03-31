@@ -1,46 +1,47 @@
-version: '1.0'
-steps:
-  BuildingDockerImage:
-    title: Building Docker Image
-    type: build
-    image_name: chloecodesthings/demochat1
-    working_directory: ./
-    dockerfile: Dockerfile
-  RunningUnitTests:
-    title: Running Unit Tests
-    type: composition
-    composition: 58dea518d09aab0100da9b96
-    composition_candidates:
-      web:
-        image: '${{BuildingDockerImage}}'
-        entrypoint: sh /codefresh/volume/cf-generated/unit_test_script
-        volumes:
-          - '${{CF_VOLUME_NAME}}:/codefresh/volume'
-    add_flow_volume_to_composition: true
-    create_file:
-      path: /codefresh/volume/cf-generated
-      name: unit_test_script
-      content: |-
-        # This bash script is executed within a freshly created docker container that's derived from the image that you build. This means that on top your code, all tools and resources that are provided by the image you build are available to this script.
-
-        # Here's the place to execute commands that unit test your code and your resources.
-        npm start &
-        npm test
-        curl http://localhost:5000 
-        echo "TEST PASSED"
-        # The exit code of your script determines the outcome of the test; Exiting with status code 0 will result in success, while exiting with code 1 and above will result in a failure.
-    on_success:
-      metadata:
-        set:
-          - '${{BuildingDockerImage.imageId}}':
-              - CF_QUALITY: true
-    on_fail:
-      metadata:
-        set:
-          - '${{BuildingDockerImage.imageId}}':
-              - CF_QUALITY: false
-  PushingToDockerRegistry:
-    title: Pushing to Docker Registry
-    type: push
-    candidate: '${{BuildingDockerImage}}'
-    tag: '${{CF_BRANCH}}'
+      image_name: containers101/demochat
+       tag: ${{CF_BRANCH}}
+  
+ - unit_tests:
+ -      title: Unit Tests
+ -      image: ${{build_step}}
+ -      fail_fast: false
+ + unit_test:
+ +      type: composition
+ +      working_directory: ${{main_clone}}
+ +      composition:
+ +          version: '2'
+ +          services:
+ +            mongo:
+ +              image: mongo:latest
+ +              ports:
+ +                - 27017
+ +      composition_candidates:
+ +          test:
+ +            image: ${{build_step}}
+ +            command: gulp test
+ +
+ + #unit_tests:
+ + #     title: Unit Tests
+ + #     image: ${{build_step}}
+ + #     fail_fast: false
+        #working-directory : ${{initial-clone}}
+ -      commands:
+ + #     commands:
+          #- npm install
+          #- npm install -g gulp
+ -        - npm test
+ + #       - npm test
+  
+ - push_to_registry:
+ -     title: Push To Registry
+ -     type: push
+ -     candidate: ${{build_step}}
+ -     tag: ${{CF_BRANCH}}
+ +# push_to_registry:
+ +#     title: Push To Registry
+ +#     type: push
+ +#     candidate: ${{build_step}}
+ +#     tag: ${{CF_BRANCH}}
+  
+   #demo-chat-integration:
+    #    type: composition
