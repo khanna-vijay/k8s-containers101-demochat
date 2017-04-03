@@ -4,11 +4,9 @@
 version: '2'
 services:
   app:
-    image: 'containers101/demochat:master'
-    links:
-      - mongo
+    build: .
+    command: bash -c 'sleep 10 && npm start'
     ports:
       - 5000
   mongo:
     image: 'mongo:latest'
-    command: mongod --smallfiles
