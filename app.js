@@ -69,7 +69,7 @@ var session = {
     resave:            false,
     saveUninitialized: true
 };
-
+debugger;
 // Set compression before any routes
 app.use(compression({ threshold: 512 }));
 
@@ -183,13 +183,7 @@ _.each(controllers, function (controller) {
 // Mongo
 //
 
-mongoose.connection.on('error', function (err) {
-    throw new Error(err);
-});
 
-mongoose.connection.on('disconnected', function () {
-    throw new Error('Could not connect to database');
-});
 
 //
 // Go Time
@@ -260,19 +254,24 @@ function checkForMongoTextSearch() {
 
 var connectionTries = 0;
 
-function handleMongoConnectionState(err) {
 
-    if (err) {
-        connectionTries++;
-        if (connectionTries < 3) {
+function handleMongoConnectionState(err) {
+  console.log('handleMongoConnectionState');
+
+    //if (err) {
+      //  connectionTries++;
+
+        /*if (connectionTries < 3) {
             console.log('Error connecting to database (will retry in 2 seconds): ' + err.toString());
-            setTimeout(tryConnect, 2000);
+            new Prpomise((resolve, reject){
+              setTimeout(tryConnect, 2000);
             return;
         }
         else {
-            throw err;
-        }
-    }
+            console.log('number of connection bigger the 3');
+            process.exit(err);
+        }*/
+  //  }
 
     checkForMongoTextSearch();
 
@@ -293,16 +292,55 @@ function handleMongoConnectionState(err) {
 
             return process.exit();
         }
-    
+
         console.log('Starting app.');
         startApp();
     });
 
 }
+const Q = require('q');
+const Kefir = require('kefir');
+const interval = 2000;
+const MongoClient = require('mongodb').MongoClient;
 
-function tryConnect() {
+function tryConnect(callback) {
     console.log('Connecting to database...');
-    mongoose.connect(settings.database.uri, handleMongoConnectionState);
+    console.log(new Date());
+    console.log(`connection is ${settings.database.uri}`)
+    MongoClient.connect(settings.database.uri, callback);
+
+
+    mongoose.connection.on('error', function (err) {
+        console.log('connection on error ${err}');
+        //callback(err);
+    });
+
+    mongoose.connection.on('disconnected', function (err) {
+        console.log(`disconnected from database error : ${err}`);
+          //callback("error");
+    });
+    //if (retryNum < 3)
+    //  throw new Error('number of connection bigger the 3');
 }
 
-tryConnect();
+  let startStream = Kefir.repeat((e)=>{
+    if (e>5) return false;
+    console.log(`e = ${e}`);
+    return Kefir.later(1000, e);
+  }).flatMap((retries)=>{
+    console.log(`retries ${retries}`)
+    if (retries<process.env.MOGNO_CONNECT_ATTEPMTS||3)
+    return Kefir.fromNodeCallback(tryConnect)
+  });
+
+  //startStream.onError((e)=>{throw e});
+
+  let everythingOk = startStream.ignoreErrors()
+  .take(1)
+  .onValue(handleMongoConnectionState);
+
+startStream.onEnd(()=>{
+  console.log('cant connect to DB after few retries');
+  process.exit(1);
+});
+startStream.log();
