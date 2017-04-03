@@ -16,7 +16,12 @@ var db_local = 'mongodb://192.168.99.100:27017/hp_mongo';
 var db_docker = 'mongodb://mongo:27017';
 
 describe('sanity tests', function(done){
-
+beforeEach((done)=>{
+  if (process.env.MONGO_TESTS)
+    done();
+  else
+  done('test should run ')
+})
 it('test mongo connection' , function(done){
 
     mongoose.connect(db_docker, function(err) {

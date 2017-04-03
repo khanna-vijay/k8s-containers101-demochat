@@ -298,7 +298,7 @@ function handleMongoConnectionState(err) {
     });
 
 }
-const Q = require('q');
+
 const Kefir = require('kefir');
 const interval = 2000;
 const MongoClient = require('mongodb').MongoClient;
