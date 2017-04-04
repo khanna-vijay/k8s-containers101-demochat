@@ -3,10 +3,9 @@
 
 version: '2'
 services:
-  app:
-    build: .
-    command: bash -c 'sleep 10 && npm start'
+  demochat:
+    image: 'containers101/demochat:master'
     ports:
       - 5000
   mongo:
-    image: 'mongo:latest'
+    image: mongo
