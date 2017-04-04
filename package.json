@@ -7,7 +7,6 @@
   "scripts": {
     "start": "node $DEBUGGER app.js",
     "stop": "pkill --signal SIGINT letschat",
-    "prestart": "migroose",
     "migrate": "migroose",
     "test": "mocha ./app/tests"
   },
