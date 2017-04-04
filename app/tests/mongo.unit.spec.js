@@ -1,5 +1,6 @@
 var debug = require('debug')('model->test');
 var  mongoose = require('mongoose');
+const MongoClient = require('mongodb').MongoClient;
 
 
 var TestSchema = new mongoose.Schema({
@@ -12,11 +13,26 @@ var TestSchema = new mongoose.Schema({
 var Entity = mongoose.model('Test1', TestSchema);
 var enitytToSave = new Entity({testField:'test1123232'});
 var dbRemote = 'mongodb://admin:hpadmin@ds037415.mongolab.com:37415/hp_mongo';
-var db_local = 'mongodb://192.168.99.100:27017/hp_mongo';
+var db_local = 'mongodb://192.168.99.101:27017/hp_mongo';
 var db_docker = 'mongodb://mongo:27017';
 
 describe('sanity tests', function(done){
-
+beforeEach((done)=>{
+  if (process.env.MONGO_TESTS)
+    done();
+  else
+  done('test will run only when MONGO_TESTS env is confugured')
+})
+it.only('test only connection', (done)=>{
+   console.log('test only connection');
+  let settings     = require('../config');
+  MongoClient.connect(db_local, function(err, db) {
+  //assert.equal(null, err);
+  console.log("Connected correctly to server");
+  done(err);
+  db.close();
+})
+})
 it('test mongo connection' , function(done){
 
     mongoose.connect(db_docker, function(err) {

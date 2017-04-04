@@ -69,7 +69,7 @@ var session = {
     resave:            false,
     saveUninitialized: true
 };
-
+debugger;
 // Set compression before any routes
 app.use(compression({ threshold: 512 }));
 
@@ -183,13 +183,7 @@ _.each(controllers, function (controller) {
 // Mongo
 //
 
-mongoose.connection.on('error', function (err) {
-    throw new Error(err);
-});
 
-mongoose.connection.on('disconnected', function () {
-    throw new Error('Could not connect to database');
-});
 
 //
 // Go Time
@@ -260,21 +254,11 @@ function checkForMongoTextSearch() {
 
 var connectionTries = 0;
 
+
 function handleMongoConnectionState(err) {
 
-    if (err) {
-        connectionTries++;
-        if (connectionTries < 3) {
-            console.log('Error connecting to database (will retry in 2 seconds): ' + err.toString());
-            setTimeout(tryConnect, 2000);
-            return;
-        }
-        else {
-            throw err;
-        }
-    }
 
-    checkForMongoTextSearch();
+  checkForMongoTextSearch();
 
     migroose.needsMigration(function (err, migrationRequired) {
 
@@ -293,16 +277,78 @@ function handleMongoConnectionState(err) {
 
             return process.exit();
         }
-    
-        console.log('Starting app.');
+
+        console.log('starting app');
         startApp();
     });
 
 }
 
-function tryConnect() {
-    console.log('Connecting to database...');
-    mongoose.connect(settings.database.uri, handleMongoConnectionState);
+const Kefir = require('kefir');
+const interval = 2000;
+const Promise = require('bluebird');
+const retry = require('bluebird-retry')
+const MongoClient = require('mongodb').MongoClient;
+const chalk = require('chalk');
+const debug = require('debug')('app');
+
+function tryConnect(callback) {
+
+    console.log(chalk.green('Connecting to database...'));
+    console.log(chalk.green(new Date()));
+    console.log(chalk.green(`connection is ${settings.database.uri}`));
+
+    let p, wrapper = {}
+
+try{
+
+    p= MongoClient.connect(settings.database.uri,
+       {connectTimeoutMS:3000, reconnectTries:1, promiseLibrary:Promise});
+       console.log('!!');
+
+    wrapper = new Promise((resolve, reject)=>{
+         p.then(resolve, reject);
+    });
+
+    mongoose.connection.on('error', function (err) {
+        console.log(chalk.red(`connection on error ${err}`));
+        callback(err);
+    });
+
+    mongoose.connection.on('disconnected', function (err) {
+        console.log(`disconnected from database error : ${err}`);
+          callback("error");
+    });
+}catch(e){
+  console.log(e + exception);
+  return Promise.reject();
+}
+process.on('uncaughtException', function (err) {
+  debug('uncaughtException: probably due to ' + err);
+})
+
+console.log(chalk.green('connection in progress'));
+p.then(()=>{
+  chalk.green('promise resolved ');
+},()=>{
+  chalk.green('promise rejected ');
+})
+return p;
+
+}
+let checkTimeout = ()=>{
+  console.log('check timeout');
+  return new Promise((resolve, reject)=>{
+    setTimeout(1000, ()=>{
+      console.log('rejected')
+      return reject();
+    })
+  })
 }
 
-tryConnect();
+  let p = retry(tryConnect, { max_tries: 5, interval: 4000,timeout:30000 })
+  .then(handleMongoConnectionState,()=>{
+  console.log(chalk.red('we coudnt connect to DB check if its up'));
+  process.exit();
+
+});
