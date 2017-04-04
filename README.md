@@ -96,7 +96,9 @@ Released under [the MIT license][license].
 ![Let's Chat Greylock](https://codefresh.io/wp-content/uploads/2017/03/lets-chat.png)
 
 
-## Use this tutorial to familiarize yourself with codefresh.yml file and Codefresh functionality.
+Use this tutorial to familiarize yourself with codefresh.yml file and Codefresh functionality.
+
+![Screenshot](https://codefresh.io/wp-content/uploads/2017/03/11.png)
 
 
 This tutorial is based on Let’s Chat [app].
@@ -206,34 +208,14 @@ Choose a name for your composition
 
 ![Screenshot](https://codefresh.io/wp-content/uploads/2017/03/2.png)
 
-We'll be using a file from our repo, so select the appropriate option (for the purpose of this demo, you may also use the Let's Chat template if you wish).
+We are going to build our comp from scrath, so click ___Empty Composition___
 
-![Screenshot](https://codefresh.io/wp-content/uploads/2017/03/3.png)
+![Screenshot](https://codefresh.io/wp-content/uploads/2017/04/empty_comp.png)
 
-We will be selecting containers101/demochat from our list. If it is not appearing, click ___Add by URL___ and enter https://github.com/Superfresh/demochat
+Now we will click ___Add Service___ and add demochat, the port (50000), and mongo.
+Everything looks good here- so let's go ahead and launch by clicking the rocket ship...
 
-![Screenshot](https://codefresh.io/wp-content/uploads/2017/04/select_repo.png)
-
-
-We know our Docker Compose file is at the root of our directory, so we'll click ___Next___.
-
-![Screenshot](https://codefresh.io/wp-content/uploads/2017/03/5.png)
-
-
-Now we will review and update our yml. Looks good- let's click ___Continue___.
-
-![Screenshot](https://codefresh.io/wp-content/uploads/2017/04/review_and_update1.png)
-
-
-Great- let's click ___Create___!
-
-![Screenshot](https://codefresh.io/wp-content/uploads/2017/04/customize2.png)
-
-
-Everything looks good here- so let's go ahead and launch...
-
-
-![Screenshot](https://codefresh.io/wp-content/uploads/2017/04/launch3.png)
+![Screenshot](https://codefresh.io/wp-content/uploads/2017/04/savelaunch_final.png)
 
 
 Once it has completed, a link to our app will be displayed. Let's click it to see if it worked.
