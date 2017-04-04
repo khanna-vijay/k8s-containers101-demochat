@@ -256,24 +256,9 @@ var connectionTries = 0;
 
 
 function handleMongoConnectionState(err) {
-  console.log('handleMongoConnectionState');
 
-    //if (err) {
-      //  connectionTries++;
 
-        /*if (connectionTries < 3) {
-            console.log('Error connecting to database (will retry in 2 seconds): ' + err.toString());
-            new Prpomise((resolve, reject){
-              setTimeout(tryConnect, 2000);
-            return;
-        }
-        else {
-            console.log('number of connection bigger the 3');
-            process.exit(err);
-        }*/
-  //  }
-
-    checkForMongoTextSearch();
+  checkForMongoTextSearch();
 
     migroose.needsMigration(function (err, migrationRequired) {
 
@@ -293,7 +278,7 @@ function handleMongoConnectionState(err) {
             return process.exit();
         }
 
-        console.log('Starting app.');
+        console.log('starting app');
         startApp();
     });
 
@@ -301,46 +286,69 @@ function handleMongoConnectionState(err) {
 
 const Kefir = require('kefir');
 const interval = 2000;
+const Promise = require('bluebird');
+const retry = require('bluebird-retry')
 const MongoClient = require('mongodb').MongoClient;
+const chalk = require('chalk');
+const debug = require('debug')('app');
 
 function tryConnect(callback) {
-    console.log('Connecting to database...');
-    console.log(new Date());
-    console.log(`connection is ${settings.database.uri}`)
-    MongoClient.connect(settings.database.uri, callback);
 
+    console.log(chalk.green('Connecting to database...'));
+    console.log(chalk.green(new Date()));
+    console.log(chalk.green(`connection is ${settings.database.uri}`));
+
+    let p, wrapper = {}
+
+try{
+
+    p= MongoClient.connect(settings.database.uri,
+       {connectTimeoutMS:3000, reconnectTries:1, promiseLibrary:Promise});
+       console.log('!!');
+
+    wrapper = new Promise((resolve, reject)=>{
+         p.then(resolve, reject);
+    });
 
     mongoose.connection.on('error', function (err) {
-        console.log('connection on error ${err}');
-        //callback(err);
+        console.log(chalk.red(`connection on error ${err}`));
+        callback(err);
     });
 
     mongoose.connection.on('disconnected', function (err) {
         console.log(`disconnected from database error : ${err}`);
-          //callback("error");
+          callback("error");
     });
-    //if (retryNum < 3)
-    //  throw new Error('number of connection bigger the 3');
+}catch(e){
+  console.log(e + exception);
+  return Promise.reject();
+}
+process.on('uncaughtException', function (err) {
+  debug('uncaughtException: probably due to ' + err);
+})
+
+console.log(chalk.green('connection in progress'));
+p.then(()=>{
+  chalk.green('promise resolved ');
+},()=>{
+  chalk.green('promise rejected ');
+})
+return p;
+
+}
+let checkTimeout = ()=>{
+  console.log('check timeout');
+  return new Promise((resolve, reject)=>{
+    setTimeout(1000, ()=>{
+      console.log('rejected')
+      return reject();
+    })
+  })
 }
 
-  let startStream = Kefir.repeat((e)=>{
-    if (e>5) return false;
-    console.log(`e = ${e}`);
-    return Kefir.later(1000, e);
-  }).flatMap((retries)=>{
-    console.log(`retries ${retries}`)
-    if (retries<process.env.MOGNO_CONNECT_ATTEPMTS||3)
-    return Kefir.fromNodeCallback(tryConnect)
-  });
+  let p = retry(tryConnect, { max_tries: 5, interval: 4000,timeout:30000 })
+  .then(handleMongoConnectionState,()=>{
+  console.log(chalk.red('we coudnt connect to DB check if its up'));
+  process.exit();
 
-  //startStream.onError((e)=>{throw e});
-
-  let everythingOk = startStream.ignoreErrors()
-  .take(1)
-  .onValue(handleMongoConnectionState);
-
-startStream.onEnd(()=>{
-  console.log('cant connect to DB after few retries');
-  process.exit(1);
 });
-startStream.log();
