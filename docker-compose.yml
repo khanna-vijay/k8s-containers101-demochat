@@ -4,7 +4,7 @@
 version: '2'
 services:
   demochat:
-    image: 'containers101/demochat:master'
+    build: .
     ports:
       - 5000
   mongo:
