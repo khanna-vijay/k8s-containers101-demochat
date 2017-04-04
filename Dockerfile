@@ -1,14 +1,11 @@
-FROM node:0.10-slim
+# Change latest to your desired node version (https://hub.docker.com/r/library/node/tags/)
+FROM node:latest
 
-RUN npm install -g mocha
-RUN npm install -g istanbul
-RUN npm install -g gulp
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
 
-COPY ./package.json /src/package.json
-RUN cd /src && npm install
-COPY  ./ /src
+COPY package.json /usr/src/app/
+RUN npm install --silent
+COPY . /usr/src/app
 
-WORKDIR /src
-#ENV DEBUG=*
-
-CMD ["npm", "start"]
+CMD [ "npm", "start" ]
