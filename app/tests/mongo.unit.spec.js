@@ -23,10 +23,10 @@ beforeEach((done)=>{
   else
   done('test will run only when MONGO_TESTS env is confugured')
 })
-it.only('test only connection', (done)=>{
+it('test only connection', (done)=>{
    console.log('test only connection');
   let settings     = require('../config');
-  MongoClient.connect(db_local, function(err, db) {
+  MongoClient.connect(db_docker, function(err, db) {
   //assert.equal(null, err);
   console.log("Connected correctly to server");
   done(err);
