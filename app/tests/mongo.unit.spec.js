@@ -17,13 +17,18 @@ var db_local = 'mongodb://192.168.99.101:27017/hp_mongo';
 var db_docker = 'mongodb://mongo:27017';
 
 describe('sanity tests', function(done){
+let skip = false;
 beforeEach((done)=>{
   if (process.env.MONGO_TESTS)
     done();
-  else
-  done('test will run only when MONGO_TESTS env is confugured')
+  else{
+  console.log('skipping running tests, make sure MONGO_TESTS env is confugured')
+  skip = true;
+  done();
+  }
 })
 it('test only connection', (done)=>{
+  if (skip) return done();
    console.log('test only connection');
   let settings     = require('../config');
   MongoClient.connect(db_docker, function(err, db) {
@@ -32,9 +37,9 @@ it('test only connection', (done)=>{
   done(err);
   db.close();
 })
-})
+}).timeout(5000);
 it('test mongo connection' , function(done){
-
+    if (skip) return done();
     mongoose.connect(db_docker, function(err) {
 
         if (err) {
@@ -58,16 +63,4 @@ it('test mongo connection' , function(done){
       });
     });
 
-});
-
-
-/*Object.keys(user).forEach(function(key) {
-    debug('key:' + key);
-    userToSave.set(key, user[key]);
-});*/
-
-/*  User.findByToken(username, function(err, user) {
-    if (err) { return done(err); }
-    if (!user) { return done(null, false); }
-    return done(null, user);
-});*/
+}).timeout(5000);
