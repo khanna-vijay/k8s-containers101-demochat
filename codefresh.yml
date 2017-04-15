@@ -39,13 +39,13 @@ steps:
 #   candidate: ${{build_step}}
 #   tag: ${{CF_BRANCH}}
 
- deploy_to_ecs:
-   title: Deploy Container to ECS
-   image: codefresh/cf-deploy-ecs
-   commands:
-     - >-
-       cfecs-update --image-name containers101/demochat --image-tag
-       ${{CF_BRANCH}} eu-west-1 demochat-production demochat-service
-   environment:
-     - 'AWS_ACCESS_KEY_ID=${{AWS_ACCESS_KEY_ID}}'
-     - 'AWS_SECRET_ACCESS_KEY=${{AWS_SECRET_ACCESS_KEY}}'
+  deploy_to_ecs:
+    title: Deploy Container to ECS
+    image: codefresh/cf-deploy-ecs
+    commands:
+      - >-
+        cfecs-update --image-name containers101/demochat --image-tag
+        ${{CF_BRANCH}} eu-west-1 demochat-production demochat-service
+    environment:
+      - 'AWS_ACCESS_KEY_ID=${{AWS_ACCESS_KEY_ID}}'
+      - 'AWS_SECRET_ACCESS_KEY=${{AWS_SECRET_ACCESS_KEY}}'
