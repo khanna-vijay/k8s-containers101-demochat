@@ -33,11 +33,11 @@ steps:
 #      test:
 #        image: '${{build_step}}'
 #        command: gulp test
-# push_to_registry:
-#   title: Push To Registry
-#   type: push
-#   candidate: ${{build_step}}
-#   tag: ${{CF_BRANCH}}
+  push_to_registry:
+    title: Push To Registry
+    type: push
+    candidate: ${{build_step}}
+    tag: ${{CF_BRANCH}}
 
   deploy_to_ecs:
     title: Deploy Container to ECS
