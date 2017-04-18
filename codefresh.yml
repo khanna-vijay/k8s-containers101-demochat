@@ -21,7 +21,7 @@ steps:
       composition_candidates:
           test:
             image: ${{build_step}}
-            command: gulp test
+            command: npm test
 
  #unit_tests:
  #     title: Unit Tests
