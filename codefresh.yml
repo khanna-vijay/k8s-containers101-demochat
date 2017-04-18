@@ -44,4 +44,4 @@ steps:
     when:
       branch:
         only:
-          - master
+          - ${{DEPLOY_ECS}}=true
