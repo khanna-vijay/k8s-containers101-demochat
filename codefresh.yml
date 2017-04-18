@@ -59,7 +59,7 @@ steps:
     tag: master
     working-directory: ${{initial-clone}}
     commands:
-      - /cf-deploy-kubernetes kube-deployment.yml
+      - /cf-deploy-kubernetes deploy/kube-deployment.yml
     environment:
       - KUBERNETES_USER=${{KUBERNETES_USER}}
       - KUBERNETES_PASSWORD=${{KUBERNETES_PASSWORD}}
