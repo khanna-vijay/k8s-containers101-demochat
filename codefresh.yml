@@ -23,39 +23,19 @@ steps:
             image: ${{build_step}}
             command: npm test
 
- #unit_tests:
- #     title: Unit Tests
- #     image: ${{build_step}}
- #     fail_fast: false
-      #working-directory : ${{initial-clone}}
- #     commands:
-        #- npm install
-        #- npm install -g gulp
- #       - npm test
+  push_to_registry:
+    title: Push To Registry
+    type: push
+    candidate: ${{build_step}}
+    tag: ${{CF_BRANCH}}
 
-# push_to_registry:
-#     title: Push To Registry
-#     type: push
-#     candidate: ${{build_step}}
-#     tag: ${{CF_BRANCH}}
-
- #demo-chat-integration:
-  #    type: composition
-    #  composition: letschat
-     # composition-candidates:
-      #  main:
-       #   image: nhoag/curl
-        #  command: bash -c "sleep 20 && curl http://demochat:5000/" | echo 'works'
-
- deploy_to_ecs:
-     title: Deploy Container to ECS
-     image: codefresh/cf-deploy-ecs
-     commands:
-       - cfecs-update --image-name containers101/demochat --image-tag ${{CF_BRANCH}} eu-west-1 demochat-production demochat-service
-     environment:
-       - AWS_ACCESS_KEY_ID=${{AWS_ACCESS_KEY_ID}}
-       - AWS_SECRET_ACCESS_KEY=${{AWS_SECRET_ACCESS_KEY}}
-     when:
-      branch:
-        only:
-          - master
+  deploy_to_ecs:
+    title: Deploy Container to ECS
+    image: codefresh/cf-deploy-ecs
+    commands:
+      - >-
+        cfecs-update --image-name containers101/demochat --image-tag
+        ${{CF_BRANCH}} eu-west-1 demochat-production demochat-service
+    environment:
+      - 'AWS_ACCESS_KEY_ID=${{AWS_ACCESS_KEY_ID}}'
+      - 'AWS_SECRET_ACCESS_KEY=${{AWS_SECRET_ACCESS_KEY}}'
