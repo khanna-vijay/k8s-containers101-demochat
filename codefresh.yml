@@ -28,7 +28,8 @@ steps:
      type: push
      candidate: ${{build_step}}
      tag: ${{CF_BRANCH}}
-
+     
+ # url: http://demo-chat-1903559730.eu-west-1.elb.amazonaws.com
  deploy_to_ecs:
     title: Deploy Container to ECS
     image: codefresh/cf-deploy-ecs
