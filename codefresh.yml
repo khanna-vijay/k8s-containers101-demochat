@@ -1,37 +1,41 @@
 version: '1.0'
 steps:
+  build_step:
+    title: Build
+    type: build
+    dockerfile: Dockerfile
+    image_name: containers101/demochat
+    tag: '${{CF_BRANCH}}'
 
- build_step:
-     title: Build 
-     type: build
-     dockerfile: Dockerfile
-     image_name: containers101/demochat
-     tag: ${{CF_BRANCH}}
+  unit_tests:
+    title: Unit Tests
+    image: ${{build_step}}
+    fail_fast: false
+    #working-directory : ${{initial-clone}}
+    commands:
+      - npm test
 
- unit_test:
-      type: composition
-      working_directory: ${{main_clone}}
-      composition:
-          version: '2'
-          services:
-            mongo:
-              image: mongo:latest
-              ports:
-                - 27017
-      composition_candidates:
-          test:
-            image: ${{build_step}}
-            command: npm test
+#  unit_test:
+#    type: composition
+#    working_directory: '${{main_clone}}'
+#    composition:
+#      version: '2'
+#      services:
+#        mongo:
+#          image: 'mongo:latest'
+#          ports:
+#            - 27017
+#    composition_candidates:
+#      test:
+#        image: '${{build_step}}'
+#        command: gulp test
+  push_to_registry:
+    title: Push To Registry
+    type: push
+    candidate: ${{build_step}}
+    tag: ${{CF_BRANCH}}
 
- push_to_registry:
-     title: Push To Registry
-     type: push
-     candidate: ${{build_step}}
-     tag: ${{CF_BRANCH}}
-     
- # url: http://demo-chat-1903559730.eu-west-1.elb.amazonaws.com
- # http://demo.codefresh.io
- deploy_to_ecs:
+  deploy_to_ecs:
     title: Deploy Container to ECS
     image: codefresh/cf-deploy-ecs
     commands:
@@ -45,3 +49,19 @@ steps:
       condition:
         all:
           deploy_to_ecs: '"${{DEPLOY_ECS}}" == "true"'
+
+  deploy_to_kubernetes:
+    image: codefresh/cf-deploy-kubernetes
+    tag: latest
+    working-directory: ${{initial-clone}}
+    commands:
+      - /cf-deploy-kubernetes deploy/kube-deployment.yml
+    environment:
+      - KUBERNETES_USER=${{KUBERNETES_USER}}
+      - KUBERNETES_PASSWORD=${{KUBERNETES_PASSWORD}}
+      - KUBERNETES_SERVER=${{KUBERNETES_SERVER}}
+      - DOCKER_IMAGE_TAG=${{CF_BRANCH}}
+    when:
+      condition:
+        all:
+          deploy_to_kubernetes: '"${{DEPLOY_KUBERNETES}}" == "true"'
