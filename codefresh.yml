@@ -7,16 +7,12 @@ steps:
     image_name: containers101/demochat
     tag: '${{CF_BRANCH}}'
 
-
-
   unit_tests:
     title: Unit Tests
     image: ${{build_step}}
     fail_fast: false
     #working-directory : ${{initial-clone}}
     commands:
-      #- npm install
-      #- npm install -g gulp
       - npm test
 
 #  unit_test:
