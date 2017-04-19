@@ -10,12 +10,12 @@ spec:
   template:
     metadata:
       annotations:
-        forceRedeployUniqId: "$UNIQ_ID"
+        forceRedeployUniqId: "{{CF_REVISION}}"
       labels:
         service: app
     spec:
       containers:
-      - image: containers101/demochat:$DOCKER_IMAGE_TAG
+      - image: containers101/demochat:{{CF_BRANCH}}
         name: app
         imagePullPolicy: Always
         ports:
