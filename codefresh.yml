@@ -56,7 +56,7 @@ steps:
 
   deploy_to_kubernetes:
     image: codefresh/cf-deploy-kubernetes
-    tag: master
+    tag: latest
     working-directory: ${{initial-clone}}
     commands:
       - /cf-deploy-kubernetes deploy/kube-deployment.yml
