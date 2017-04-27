@@ -19,13 +19,13 @@ var db_docker = 'mongodb://mongo:27017';
 describe('sanity tests', function(done){
 let skip = false;
 beforeEach((done)=>{
-  if (process.env.MONGO_TESTS)
+  //if (process.env.MONGO_TESTS)
     done();
-  else{
-  console.log('skipping running tests, make sure MONGO_TESTS env is confugured')
-  skip = true;
-  done();
-  }
+  //else{
+  //console.log('skipping running tests, make sure MONGO_TESTS env is confugured')
+  //skip = true;
+  //done();
+  //}
 })
 it('test only connection', (done)=>{
   if (skip) return done();
