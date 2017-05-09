@@ -55,7 +55,7 @@ steps:
     tag: latest
     working_directory: ${{main_clone}}
     commands:
-      - /cf-deploy-kubernetes deploy/kube-deployment.yml
+      - /cf-deploy-kubernetes deployment.yml
     environment:
       - KUBERNETES_USER=${{KUBERNETES_USER}}
       - KUBERNETES_PASSWORD=${{KUBERNETES_PASSWORD}}
