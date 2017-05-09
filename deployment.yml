@@ -15,7 +15,7 @@ spec:
         service: app
     spec:
       containers:
-      - image: containers101/demochat:{{CF_BRANCH}}
+      - image: ChloeCodesThings/demochat:{{CF_BRANCH}}
         name: app
         imagePullPolicy: Always
         ports:
