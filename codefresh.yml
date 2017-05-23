@@ -3,7 +3,7 @@ steps:
   build_step:
     title: Build
     type: build
-    dockerfile: Dockerfile
+    dockerfile: ./Dockerfile
     image_name: containers101/demochat
     tag: '${{CF_BRANCH}}'
 
