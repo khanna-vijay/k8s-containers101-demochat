@@ -6,7 +6,7 @@ metadata:
   labels:
     service: app
 spec:
-  replicas: 2
+  replicas: 5
   template:
     metadata:
       annotations:
