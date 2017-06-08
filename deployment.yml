@@ -2,9 +2,9 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: demo-board
+  name: demo-board-{{CF_BRANCH}}
   labels:
-    service: demo-board
+    service: demo-board-{{CF_BRANCH}}
 spec:
   replicas: 1
   template:
