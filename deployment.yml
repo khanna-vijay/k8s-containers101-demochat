@@ -2,9 +2,9 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: app
+  name: demo-board
   labels:
-    service: app
+    service: demo-board
 spec:
   replicas: 5
   template:
