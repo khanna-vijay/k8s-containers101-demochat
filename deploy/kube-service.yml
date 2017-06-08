@@ -2,8 +2,8 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: demochat-board
-  name: demochat-board
+    app: demochat-master
+  name: demochat-master
 spec:
   type: NodePort
   ports:

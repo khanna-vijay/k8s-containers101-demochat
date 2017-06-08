@@ -12,7 +12,7 @@ spec:
       annotations:
         forceRedeployUniqId: "{{CF_REVISION}}"
       labels:
-        service: app
+        service: demochat-master
     spec:
       containers:
       - image: verchol/demochat-board:{{CF_BRANCH}}
