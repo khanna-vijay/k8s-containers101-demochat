@@ -2,9 +2,9 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: demochat-master
+  name: demochat_master
   labels:
-    service: demochat-master
+    service: demochat_master
 spec:
   replicas: 1
   template:
@@ -12,7 +12,7 @@ spec:
       annotations:
         forceRedeployUniqId: "{{CF_REVISION}}"
       labels:
-        service: demochat-master
+        service: demochat_master
     spec:
       containers:
       - image: verchol/demochat-board:{{CF_BRANCH}}

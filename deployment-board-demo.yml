@@ -2,9 +2,9 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: demochat-board
+  name: demochat_board
   labels:
-    service: demochat-board
+    service: demochat_board
 spec:
   replicas: 1
   template:
@@ -12,10 +12,10 @@ spec:
       annotations:
         forceRedeployUniqId: "{{CF_REVISION}}"
       labels:
-        service: demochat-board
+        service: demochat_board
     spec:
       containers:
-      - image: verchol/demochat-board:{{CF_BRANCH}}
+      - image: verchol/demochat_board:{{CF_BRANCH}}
         name: app
         imagePullPolicy: Always
         ports:
