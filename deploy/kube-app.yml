@@ -2,23 +2,22 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: app
+  name: demo-chat
   labels:
-    service: app
+    service: demo-chat
 spec:
-  replicas: 2
+  replicas: 1
   template:
     metadata:
       annotations:
         forceRedeployUniqId: "N/A"
       labels:
-        service: app
+        service: demo-chat
     spec:
       containers:
-      - image: containers101/demochat:master
+      - image: ${{build_step}}
         name: app
         imagePullPolicy: Always
         ports:
         - containerPort: 5000
           protocol: TCP
-
