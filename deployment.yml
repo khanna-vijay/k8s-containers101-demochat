@@ -6,7 +6,7 @@ metadata:
   labels:
     service: demo-board
 spec:
-  replicas: 5
+  replicas: 1
   template:
     metadata:
       annotations:
@@ -21,4 +21,3 @@ spec:
         ports:
         - containerPort: 5000
           protocol: TCP
-
