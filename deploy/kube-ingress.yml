@@ -15,7 +15,7 @@ spec:
   selector:
     service: demo-chat
 ---
-apiVersion: extensions/v1beta1g
+apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: demochat-ingress
