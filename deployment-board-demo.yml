@@ -15,7 +15,7 @@ spec:
         service: demochatboard
     spec:
       containers:
-      - image: verchol/demochat_board:{{CF_BRANCH}}
+      - image: verchol/demochat-board:{{CF_BRANCH}}
         name: app
         imagePullPolicy: Always
         ports:
