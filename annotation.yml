@@ -6,6 +6,9 @@ steps:
     image_name: containers101/demochat
     working_directory: ./
     dockerfile: Dockerfile
+      metadata:
+        set:
+          qa: pending
   RunningUnitTests:
     title: Running Unit Tests
     type: composition
@@ -26,11 +29,11 @@ steps:
         set:
           - '${{BuildingDockerImage.imageId}}':
               - CF_QUALITY: true
-              - Unit Test: true
-              - API Test: true
-              - Performance: Average Response Time 2msec
-              - Performance: 0 Packet Loss
-              - Security: true
+#              - Unit Test: true
+#              - API Test: true
+#              - Performance: Average Response Time 2msec
+#              - Performance: 0 Packet Loss
+#              - Security: true
     on_fail:
       metadata:
         set:
