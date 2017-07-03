@@ -8,9 +8,11 @@ steps:
     dockerfile: Dockerfile
     metadata: # Declare the metadata attribute
       set: # Specify the set operation
-        - qa: pending
-        - commit_message: ${{CF_COMMIT_MESSAGE}}
-        - exit_code: 0
+        - Unit_Test: true
+        - API_Test: true
+        - Ave_Res_Time: 2 msec
+        - Packet_Loss: 0
+        - Security: true
   RunningUnitTests:
     title: Running Unit Tests
     type: composition
