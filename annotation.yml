@@ -26,8 +26,11 @@ steps:
         set:
           - '${{BuildingDockerImage.imageId}}':
               - CF_QUALITY: true
-          - '${{BuildingDockerImage.imageId}}':
-              - CF_QUALITY1: true
+              - Unit Test: true
+              - API Test: true
+              - Performance: Average Response Time 2msec
+              - Performance: 0 Packet Loss
+              - Security: true
     on_fail:
       metadata:
         set:
