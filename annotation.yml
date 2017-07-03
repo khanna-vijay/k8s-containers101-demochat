@@ -11,8 +11,6 @@ steps:
         - qa: pending
         - commit_message: ${{CF_COMMIT_MESSAGE}}
         - exit_code: 0
-        - is_main: 
-          evaluate: "'${{CF_BRANCH}}' == 'main'"
   RunningUnitTests:
     title: Running Unit Tests
     type: composition
