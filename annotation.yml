@@ -1,0 +1,34 @@
+version: '1.0'
+steps:
+  BuildingDockerImage:
+    title: Building Docker Image
+    type: build
+    image_name: containers101/demochat
+    working_directory: ./
+    dockerfile: Dockerfile
+  RunningUnitTests:
+    title: Running Unit Tests
+    type: composition
+    composition: 5959cfa8e82afd0001bb2f1c
+    composition_candidates:
+      demochat:
+        image: '${{BuildingDockerImage}}'
+        entrypoint: sh /codefresh/volume/cf-generated/unit_test_script
+        volumes:
+          - '${{CF_VOLUME_NAME}}:/codefresh/volume'
+    add_flow_volume_to_composition: true
+    create_file:
+      path: /codefresh/volume/cf-generated
+      name: unit_test_script
+      content: npm test
+    on_success:
+      metadata:
+        set:
+          - '${{BuildingDockerImage.imageId}}':
+              - CF_QUALITY: true
+    on_fail:
+      metadata:
+        set:
+          - '${{BuildingDockerImage.imageId}}':
+              - CF_QUALITY: false
+
