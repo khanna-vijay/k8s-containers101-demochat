@@ -14,14 +14,52 @@ data:
 apiVersion: v1
 kind: Pod
 metadata:
-  name: test-pod
-data:
-  test: |
-    aaaa
-    bbbb
-    cccc
-    dddd
-    eeee
+  name: dind-02
+  annotations:
+    forceRedeployUniqId: "N/A"
+  labels:
+    app: dind
+spec:
+  hostname: dind-02
+  subdomain: dind
+  containers:
+  - image: docker:17.05.0-ce-dind
+    name: dind
+    imagePullPolicy: IfNotPresent
+    securityContext:
+      privileged: true
+    ports:
+    - containerPort: 1300
+      protocol: TCP
+    command:
+      - "/bin/sh"
+      - "-c"
+      - |
+        rm -fv /var/run/docker.pid
+        mkdir /var/run/codefresh
+        dockerd
+    readinessProbe:
+      exec:
+        command:
+        - docker
+        - ps
+      initialDelaySeconds: 2
+      periodSeconds: 2
+    volumeMounts:
+    - mountPath: /etc/ssl/cf
+      readOnly: true
+      name: cf-certs
+    - mountPath: /etc/docker/daemon.json
+      name: dind-config
+      readOnly: true
+      subPath: daemon.json
+  volumes:
+  - name: cf-certs
+    secret:
+      secretName: cf-certs
+  - name: dind-config
+    configMap:
+      name: dind-config
 #---
 #apiVersion: extensions/v1beta1
 #kind: Deployment
