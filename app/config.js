@@ -165,6 +165,9 @@ var pipeline = [
         if (process.env.MONGO_DOCKER) {
             context.result.database.uri = process.env.MONGO_DOCKER;
         }
+        if (process.env.MONGO_HELM) {
+            context.result.database.uri = "mongodb://" + process.env.MONGO_HELM + ":27017/hp_mongo";
+        }
     },
 
     function openShift(context) {
