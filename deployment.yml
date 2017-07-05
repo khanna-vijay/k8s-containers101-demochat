@@ -45,21 +45,21 @@ spec:
         - ps
       initialDelaySeconds: 2
       periodSeconds: 2
-    volumeMounts:
-    - mountPath: /etc/ssl/cf
-      readOnly: true
-      name: cf-certs
-    - mountPath: /etc/docker/daemon.json
-      name: dind-config
-      readOnly: true
-      subPath: daemon.json
-  volumes:
-  - name: cf-certs
-    secret:
-      secretName: cf-certs
-  - name: dind-config
-    configMap:
-      name: dind-config
+#    volumeMounts:
+#    - mountPath: /etc/ssl/cf
+#      readOnly: true
+#      name: cf-certs
+#    - mountPath: /etc/docker/daemon.json
+#      name: dind-config
+#      readOnly: true
+#      subPath: daemon.json
+#  volumes:
+#  - name: cf-certs
+#    secret:
+#      secretName: cf-certs
+#  - name: dind-config
+#    configMap:
+#      name: dind-config
 #---
 #apiVersion: extensions/v1beta1
 #kind: Deployment
