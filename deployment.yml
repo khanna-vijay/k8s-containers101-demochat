@@ -3,11 +3,11 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: prometheus-rules
-data: |
-  aaaa
-  bbbb
-  cccc
-
+data:
+  test: |
+    aaaa
+    bbbb
+    cccc
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment

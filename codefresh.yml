@@ -51,8 +51,7 @@ steps:
           deploy_to_ecs: '"${{DEPLOY_ECS}}" == "true"'
 
   deploy_to_kubernetes:
-    image: codefresh/cf-deploy-kubernetes
-    tag: k8s-jobs-support
+    image: codefresh/cf-deploy-kubernetes:k8s-jobs-support
     working_directory: ${{main_clone}}
     commands:
       - /cf-deploy-kubernetes deployment.yml
