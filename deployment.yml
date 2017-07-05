@@ -11,25 +11,37 @@ data:
     dddd
     eeee
 ---
-apiVersion: extensions/v1beta1
-kind: Deployment
+apiVersion: v1
+kind: Pod
 metadata:
-  name: app
-  labels:
-    service: app
-spec:
-  replicas: 5
-  template:
-    metadata:
-      annotations:
-        forceRedeployUniqId: "{{CF_REVISION}}"
-      labels:
-        service: app
-    spec:
-      containers:
-      - image: containers101/demochat:{{CF_BRANCH}}
-        name: app
-        imagePullPolicy: Always
-        ports:
-        - containerPort: 5000
-          protocol: TCP
+  name: test-pod
+data:
+  test: |
+    aaaa
+    bbbb
+    cccc
+    dddd
+    eeee
+#---
+#apiVersion: extensions/v1beta1
+#kind: Deployment
+#metadata:
+#  name: app
+#  labels:
+#    service: app
+#spec:
+#  replicas: 5
+#  template:
+#    metadata:
+#      annotations:
+#        forceRedeployUniqId: "{{CF_REVISION}}"
+#      labels:
+#        service: app
+#    spec:
+#      containers:
+#      - image: containers101/demochat:{{CF_BRANCH}}
+#        name: app
+#        imagePullPolicy: Always
+#        ports:
+#        - containerPort: 5000
+#          protocol: TCP
