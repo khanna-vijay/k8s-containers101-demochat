@@ -11,75 +11,25 @@ data:
     dddd
     eeee
 ---
-apiVersion: v1
-kind: Pod
+apiVersion: extensions/v1beta1
+kind: Deployment
 metadata:
-  name: dind-02
-  annotations:
-    forceRedeployUniqId: "N/A"
+  name: app
   labels:
-    app: dind
+    service: app
 spec:
-  hostname: dind-02
-  subdomain: dind
-  containers:
-  - image: docker:17.05.0-ce-dind
-    name: dind
-    imagePullPolicy: IfNotPresent
-    securityContext:
-      privileged: true
-    ports:
-    - containerPort: 1300
-      protocol: TCP
-    command:
-      - "/bin/sh"
-      - "-c"
-      - |
-        rm -fv /var/run/docker.pid
-        mkdir /var/run/codefresh
-        dockerd
-    readinessProbe:
-      exec:
-        command:
-        - docker
-        - ps
-      initialDelaySeconds: 2
-      periodSeconds: 2
-#    volumeMounts:
-#    - mountPath: /etc/ssl/cf
-#      readOnly: true
-#      name: cf-certs
-#    - mountPath: /etc/docker/daemon.json
-#      name: dind-config
-#      readOnly: true
-#      subPath: daemon.json
-#  volumes:
-#  - name: cf-certs
-#    secret:
-#      secretName: cf-certs
-#  - name: dind-config
-#    configMap:
-#      name: dind-config
-#---
-#apiVersion: extensions/v1beta1
-#kind: Deployment
-#metadata:
-#  name: app
-#  labels:
-#    service: app
-#spec:
-#  replicas: 5
-#  template:
-#    metadata:
-#      annotations:
-#        forceRedeployUniqId: "{{CF_REVISION}}"
-#      labels:
-#        service: app
-#    spec:
-#      containers:
-#      - image: containers101/demochat:{{CF_BRANCH}}
-#        name: app
-#        imagePullPolicy: Always
-#        ports:
-#        - containerPort: 5000
-#          protocol: TCP
+  replicas: 5
+  template:
+    metadata:
+      annotations:
+        forceRedeployUniqId: "{{CF_REVISION}}"
+      labels:
+        service: app
+    spec:
+      containers:
+      - image: containers101/demochat:{{CF_BRANCH}}
+        name: app
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5000
+          protocol: TCP
