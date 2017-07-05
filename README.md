@@ -163,6 +163,8 @@ Clicking on ___Build___  button will trigger a regular build.
 Great, you  are running  your build for the first time!
 
 ## Push your image to Docker registry
+In Codefresh the build images will be automatically pushed to Codefresh registry and there’s no need to specify the [Codefresh Docker Registry](https://docs.codefresh.io/v1.0/docs/codefresh-registry)  for the block __Push to Docker Registry__ in the pipeline of repository and you can just skip this step.
+
 Click on ___Repositories___, and then click on the ___Pipelines___ gear.
 
 ![Screenshot](https://codefresh.io/wp-content/uploads/2017/03/19.png)
