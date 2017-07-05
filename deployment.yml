@@ -9,6 +9,7 @@ data:
     bbbb
     cccc
     dddd
+    eeee
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
@@ -32,4 +33,3 @@ spec:
         ports:
         - containerPort: 5000
           protocol: TCP
-
