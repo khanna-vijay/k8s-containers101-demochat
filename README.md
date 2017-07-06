@@ -236,3 +236,9 @@ Success! We have successfully launched a composition.
 
 [app]: https://github.com/containers101/demochat
 
+About Containers 101
+Contianers 101 is online/offline meetup group based in Mountain View that provides guides and helps developers work with Containers. Created by Codefresh which provides environments for every commit, Docker CI and CD, and an embedded registry. 
+
+Join Containers 101
+Learn more about Codefresh
+
