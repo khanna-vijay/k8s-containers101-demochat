@@ -3,12 +3,12 @@ steps:
 
   unit_tests:
     title: Unit Tests
-    image: alpine:latest
+    image: ubuntu:latest
     fail_fast: false
     commands:
       - cf_export SOME=VALUE1
       - cf_export SOME_KEY=VALUE1
-      - cf_export MY_IMAGE=alpine:latest
+      - cf_export MY_IMAGE=ubuntu:latest
       
       
       
