@@ -19,10 +19,9 @@ steps:
       
   unit_testss:
     title: Unit Tests
-    image: alpine:latest
+    image: ${{MY_IMAGE}}
     fail_fast: false
     commands:
-      - env
       - echo $SOME
       - echo $SOME_KEY
       - echo $CF_BRANCH
