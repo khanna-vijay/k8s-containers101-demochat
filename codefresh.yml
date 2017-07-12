@@ -20,3 +20,4 @@ steps:
       - echo $SOME
       - echo $SOME_KEY
       - echo $CF_BRANCH
+      - cat ${{CF_VOLUME_PATH}}/env_vars_to_export
