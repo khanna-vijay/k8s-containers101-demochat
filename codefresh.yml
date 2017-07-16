@@ -7,7 +7,8 @@ steps:
     fail_fast: false
     commands:
       - cf_export SOME=VALUE1
-      - exit 1
+      - export ITAI=hey
+      - cf_export ITAI
       - cf_export MY_IMAGE=ubuntu:latest
       - cat ${{CF_VOLUME_PATH}}/env_vars_to_export
     when:
