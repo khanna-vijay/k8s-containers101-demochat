@@ -10,9 +10,9 @@ steps:
         - export GIT_HASH=$(git rev-parse --short=5 HEAD)
         - cf_export GIT_TAG=$GIT_HASH
   test-git-hash:
-    description: retrive git tag
+    description: retrive git tag!
     title: Free styling 2
-    image: ubuntu:lastest
+    image: ubuntu:latest
     commands:
       - echo $GIT_TAG
   build_step:
