@@ -8,8 +8,15 @@ steps:
     commands:
         - echo $(git rev-parse --short=5 HEAD)
         - export GIT_HASH=$(git rev-parse --short=5 HEAD)
+        - cf_export GIT_TAG=$GIT_TAG
+  retrieve-git-hash:
+    description: retrive git tag
+    title: Free styling 2
+    image: ubuntu:lastest
+    commands:
+        - echo $(git rev-parse --short=5 HEAD)
+        - export GIT_HASH=$(git rev-parse --short=5 HEAD)
         - cf_export $GIT_TAG
-
   build_step:
     title: Build
     type: build
