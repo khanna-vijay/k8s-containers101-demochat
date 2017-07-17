@@ -4,7 +4,7 @@ steps:
   retrieve-git-hash:
     description: retrive git tag
     title: Free styling 2
-    image: ${{build_step.image}}
+    image: ${{build_step}}
     commands:
         - echo $(git rev-parse --short=5 HEAD)
         - export GIT_HASH=$(git rev-parse --short=5 HEAD)
@@ -23,7 +23,8 @@ steps:
     description: Free text description
     candidate: ${{build_step}}
     tag: ${{GIT_TAG}}
-    image_name: containers101/demochat
+    image_name: verchol/demochat
+    registry : dockerhub
 
   deploy_to_kubernetes:
     image: codefresh/cf-deploy-kubernetes
