@@ -4,7 +4,7 @@ steps:
   retrieve-git-hash:
     description: retrive git tag
     title: Free styling 2
-    image: ${{build_step}}
+    image: ubuntu:latest
     commands:
         - echo $(git rev-parse --short=5 HEAD)
         - export GIT_HASH=$(git rev-parse --short=5 HEAD)
