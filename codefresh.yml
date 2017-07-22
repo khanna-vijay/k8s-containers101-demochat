@@ -4,16 +4,17 @@ steps:
     title: Build
     type: build
     dockerfile: Dockerfile
-    image_name: containers101/demochat
+    image_name: ncodefresh/demochat
     tag: '${{CF_BRANCH}}'
 
-#  unit_tests:
-#    title: Unit Tests
-#    image: ${{build_step}}
-#    fail_fast: false
-#    working-directory : /usr/src/app
-#    commands:
-#      - npm test
+# see https://docs.codefresh.io/docs/variables to find how to export custom env vars
+  generate_env_vars:
+    title: Unit Tests
+    image: ${{build_step}}
+    fail_fast: false
+    commands:
+      - cf_export TAG1=tag1 REGISTRY_NAME=dockerhub
+      - echo TAG2=tag2 >> ${{CF_VOLUME_PATH}}/env_vars_to_export
 
   unit_test:
     type: composition
@@ -29,11 +30,14 @@ steps:
       test:
         image: '${{build_step}}'
         command: npm test
+
+#  see https://docs.codefresh.io/docs/push-1#section-using-codefresh-docker-registry-integration to find more about multiple tags
   push_to_registry:
     title: Push To Registry
     type: push
+    registry: ${{REGISTRY_NAME}}
     candidate: ${{build_step}}
-    tag: ${{CF_BRANCH}}
+    tags: [ ${TAG1}, ${TAG2} ]
 
   deploy_to_ecs:
     title: Deploy Container to ECS
