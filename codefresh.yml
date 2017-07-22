@@ -37,7 +37,9 @@ steps:
     type: push
     registry: ${{REGISTRY_NAME}}
     candidate: ${{build_step}}
-    tags: [ ${TAG1}, ${TAG2} ]
+    tags:
+      - ${TAG1}
+      - ${TAG2}
 
   deploy_to_ecs:
     title: Deploy Container to ECS
