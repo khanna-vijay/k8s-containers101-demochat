@@ -13,7 +13,7 @@ steps:
     image: ${{build_step}}
     fail_fast: false
     commands:
-      - cf_export TAG1=tag1 REGISTRY_NAME=dockerhub
+      - cf_export TAG1=tag1
       - echo TAG2=tag2 >> ${{CF_VOLUME_PATH}}/env_vars_to_export
 
   unit_test:
@@ -35,7 +35,7 @@ steps:
   push_to_registry:
     title: Push To Registry
     type: push
-    registry: ${{REGISTRY_NAME}}
+    registry: dockerhub
     candidate: ${{build_step}}
     tags:
       - ${TAG1}
