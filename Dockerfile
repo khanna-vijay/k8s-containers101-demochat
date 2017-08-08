@@ -1,11 +1,11 @@
-# Change latest to your desired node version (https://hub.docker.com/r/library/node/tags/)
-FROM node:7.10
+FROM node:8.1.4-alpine
+
 
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 COPY package.json /usr/src/app/
-RUN npm install
+RUN yarn install
 COPY . /usr/src/app
 
 CMD [ "npm", "start" ]
