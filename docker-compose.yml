@@ -4,8 +4,10 @@
 version: '2'
 services:
   demochat:
-    build: .
-    ports:
-      - 5000
+   image: demochat:test
+   ports:
+      - 5000:5000
+   depends_on:
+      - mongo
   mongo:
     image: mongo

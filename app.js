@@ -258,7 +258,7 @@ var connectionTries = 0;
 function handleMongoConnectionState(err) {
 
 
-  checkForMongoTextSearch();
+  //checkForMongoTextSearch();
 
     migroose.needsMigration(function (err, migrationRequired) {
 

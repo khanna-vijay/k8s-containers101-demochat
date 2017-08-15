@@ -10,10 +10,6 @@
     "migrate": "migroose",
     "test": "mocha ./app/tests"
   },
-  "engine": {
-    "node": "0.10.x",
-    "npm": "2.1.x"
-  },
   "repository": {
     "type": "git",
     "url": "git://github.com/sdelements/lets-chat.git"
@@ -85,9 +81,9 @@
     "migroose-cli": "^0.1.0",
     "moment": "^2.10.6",
     "mongodb": "^2.2.25",
-    "mongoose": "~4.1.8",
+    "mongoose": "^4.11.6",
     "mongoose-unique-validator": "~0.4.1",
-    "mongoose-validate": "0.0.5",
+    "mongoose-validate": "https://github.com/Codefresh-Examples/mongoose-validate.git",
     "multer": "^0.1.8",
     "node-uuid": "^1.4.3",
     "node-xmpp-server": "2.1.0",
