@@ -4,6 +4,7 @@ kind: Deployment
 metadata:
   name: demo-chat
   labels:
+    deploy: test1
     service: demo-chat
     app: demo-chat
 spec:
@@ -11,6 +12,7 @@ spec:
   template:
     metadata:
       labels:
+        deploy: test1
         service: demo-chat
     spec:
       imagePullSecrets:
@@ -26,6 +28,8 @@ spec:
   apiVersion: extensions/v1beta1
   kind: Ingress
   metadata:
+    labels:
+      deploy: test1
     name: demochat-ingress
   spec:
     backend:
@@ -36,7 +40,8 @@ spec:
   kind: Service
   metadata:
     labels:
-      name: demochat-master
+      deploy: test1
+    name: demochat-master
   spec:
     type: NodePort
     selector:
@@ -48,3 +53,58 @@ spec:
       targetPort: 5000
     selector:
       service: demochat-board
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: mongo
+  name: mongo
+spec:
+  type: NodePort
+  ports:
+  - name: "http"
+    port: 27017
+    protocol: TCP
+    targetPort: 27017
+  selector:
+    service: mongo
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: mongo
+spec:
+  backend:
+    serviceName: mongo
+    servicePort: 27017
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    io.codefresh.owner: codefresh
+  name: mongo
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        service: mongo
+    spec:
+      containers:
+      - args:
+        - mongod
+        - --smallfiles
+        image: mongo:latest
+        name: mongo
+        ports:
+        - containerPort: 27017
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /data/db
+          name: mongo-data
+      restartPolicy: Always
+      volumes:
+      - name: mongo-data
+        emptyDir: {}
