@@ -1,0 +1,60 @@
+version: '1.0'
+steps:
+  BuildingDockerImage:
+    title: Building Docker Image
+    type: build
+    image_name: containers101/demochat
+    working_directory: ./
+    dockerfile: Dockerfile
+    tag: '${{CF_BRANCH_TAG_NORMALIZED}}'
+    
+  
+  RunningPerformanceTests:
+    title: Running Performance Tests
+    type: composition
+    composition:
+      version: '2'
+      services:
+        aut:
+          ports:
+            - 5000
+          image: 'containers101/demochat:master'
+        mongo:
+          image: mongo
+    composition_candidates:
+      cfintegration:
+        image: 'r.cfcr.io/razielt77_github/razielt/taurus:master'
+        command: bash runtests
+        environment:
+          - CF_VOLUME_PATH=${{CF_VOLUME_PATH}}
+          - TOKEN=${{TOKEN}} 
+        volumes:
+         - '${{CF_VOLUME_NAME}}:/codefresh/volume'
+    add_flow_volume_to_composition: true
+    on_success:
+      metadata:
+        set:
+          - '${{BuildingDockerImage.imageId}}':
+              - CF_QUALITY: true
+              - PerformanceReport: ${{PER_LINK}}
+    on_fail:
+      metadata:
+        set:
+          - '${{BuildingDockerImage.imageId}}':
+              - CF_QUALITY: false
+  export:
+    title: "Exporting variables..."
+    image: alpine
+    commands:
+      - echo "Exporting variables..."
+  set_metadata:
+    title: "Setting metadata on image..."
+    image: alpine
+    commands:
+      - echo "Setting metadata on image..."
+    on_finish:
+      metadata:
+        set:
+          - '${{BuildingDockerImage.imageId}}':
+              - PerformanceReport: ${{PER_LINK}}
+              
