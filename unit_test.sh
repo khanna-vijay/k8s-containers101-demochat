@@ -1,3 +1,5 @@
+echo "running unit test..."
+
 npm test
 
 export UNIT_COV=80%
