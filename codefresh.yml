@@ -7,6 +7,7 @@ steps:
     #working_directory: ./service1/
     dockerfile: Dockerfile
     tag: '${{CF_BRANCH_TAG_NORMALIZED}}'
+
   push:
     type: push
     title: push
@@ -15,6 +16,7 @@ steps:
     image_name: verchol/demochat
     tag: v1.0
     registry: dockerhub
+
   integration-tests:
     title : helm step
     image: verchol/helmclient:v2.6.1
