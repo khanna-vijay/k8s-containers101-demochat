@@ -13,7 +13,7 @@ image:
 test:
   image: mwendler/wget
   timeout :  5 # number of seconds for reconnect
-  tries : 5 #number of retries
+  tries : 40 #number of retries
 service:
   name: demochat
   type: LoadBalancer
