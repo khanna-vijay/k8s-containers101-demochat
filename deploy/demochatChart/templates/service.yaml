@@ -7,6 +7,9 @@ metadata:
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
+    sha: {{ .Values.commit.sha }}
+    branch: "{{ .Values.commit.branch }}"
+    repo: "{{ .Values.commit.repo }}"
 spec:
   type: {{ .Values.service.type }}
   ports:
