@@ -15,11 +15,13 @@ steps:
     image_name: verchol/demochat
     tag: v1.0
     registry: dockerhub
-  deploy:
+  integration-tests:
     title : helm step
     image: verchol/helmclient:v2.6.1
     commands:
      - kubectl config use-context gke_kuberentes_us-central1-a_demo-chat
      - helm ls
-     - helm upgrade --install --namespace qa1 --set appversion=14 --set tag=v1.0 --set=commit.sha={{CF_REVISION} --set=commit.branch=${{CF_BRANCH}}  integrations${{CF_REVISION}} ./deploy/demochatChart
-     - helm test integrations${{CF_REVISION}}
+     - helm upgrade --install --namespace qa1 --set test.tries=40  --set appversion=14 --set tag=v1.0 --set=commit.sha={{CF_REVISION} --set=commit.branch=${{CF_BRANCH}} integrations${{CF_REVISION}} ./deploy/demochatChart
+     - sleep 10
+     - helm test integrations${{CF_REVISION}} || true
+     - kubectl delete pods/integrations${{CF_REVISION}}-e2e-test -nqa1
