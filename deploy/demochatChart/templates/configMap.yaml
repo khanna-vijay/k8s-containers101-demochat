@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ template "name" . }}-config
+  name: {{.Release.Name }}-config
   namespace: default
 data:
   sha: "{{ .Values.commit.sha }}"
