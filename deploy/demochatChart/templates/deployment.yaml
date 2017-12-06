@@ -19,7 +19,7 @@ spec:
         appversion: "{{.Values.appversion}}"
     spec:
         containers:
-        - image: containers101/demochat:master
+        - image: {{.Values.image.repository}}:{{.Values.image.tag}}
           name: app
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:

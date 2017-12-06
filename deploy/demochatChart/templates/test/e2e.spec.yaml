@@ -8,10 +8,15 @@ spec:
   containers:
   - name: {{ .Release.Name }}-e2e-test
     image: {{ .Values.test.image}}
+    command: ["/bin/sh"]
+    args: ["-c" , 'wget --tries {{.Values.test.tries}} $(echo http://${{ template "demochat" . }}/login) ']
+        #["bin/sh"]
+    #args : ["-c", "sleep 10000"]
+        # ["http://{{ .Release.Name }}-demochat/login"]
     imagePullPolicy: {{ .Values.image.pullPolicy }}
     env:
       - name: serviceName
         value: {{ .Values.service.name }}
-    command: ["npm", "test"]
+
       #W["sh", "-c", "curl $serviceNAme:80&&echo workded"]
   restartPolicy: Never

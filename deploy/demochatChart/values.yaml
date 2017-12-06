@@ -7,11 +7,13 @@ build : "1"
 test:
   key: "value2"
 image:
-  repository: verchol/demo-service1
-  tag: v8
+  repository: containers101/demochat
+  tag: master
   pullPolicy: IfNotPresent
 test:
-  image: verchol/demo-service1:v2
+  image: mwendler/wget
+  timeout :  5 # number of seconds for reconnect
+  tries : 5 #number of retries
 service:
   name: demochat
   type: LoadBalancer
