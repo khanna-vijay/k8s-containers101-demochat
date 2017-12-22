@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Config
+clusters:
+- cluster:
+    api-version: v1
+    insecure-skip-tls-verify: false
+    server: "https://35.162.193.68:8080/r/projects/1a5/kubernetes:6443"
+  name: "Dev"
+contexts:
+- context:
+    cluster: "Dev"
+    user: "Dev"
+  name: "Dev"
+current-context: "Dev"
+users:
+- name: "Dev"
+  user:
+    token: "QmFzaWMgTkVFd056WTBOVGxFT0RORE5rSTVRelJCUWpZNldEWkVSMFU0YjI5SWQweElNVE50Umpaa1FYUkdibGcwWW1obGNrNUVialE1YmpodlkyVjRNdz09"

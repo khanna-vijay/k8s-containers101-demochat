@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: 2017-12-22T21:13:44Z
+  labels:
+    app: prod-mongodb
+    chart: mongodb-0.4.18
+    heritage: Tiller
+    release: prod
+  name: prod-mongodb
+  namespace: production
+  resourceVersion: "44859534"
+  selfLink: /api/v1/namespaces/production/services/prod-mongodb
+  uid: fe18052a-e75c-11e7-87db-42010af00032
+spec:
+  clusterIP: 10.83.254.119
+  ports:
+  - name: mongodb
+    port: 27017
+    protocol: TCP
+    targetPort: mongodb
+  selector:
+    app: prod-mongodb
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}

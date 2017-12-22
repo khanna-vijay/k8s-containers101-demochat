@@ -9,11 +9,11 @@ test:
 image:
   repository: containers101/demochat
   tag: master
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
 test:
   image: mwendler/wget
   timeout :  5 # number of seconds for reconnect
-  tries : 40 #number of retries
+  tries : 5 #number of retries
 service:
   name: demochat
   type: LoadBalancer

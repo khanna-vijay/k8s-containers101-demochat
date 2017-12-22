@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Config
+clusters:
+- cluster:
+    api-version: v1
+    insecure-skip-tls-verify: false
+    server: "https://54.161.92.44:8080/k8s/clusters/1c10"
+  name: "Default"
+contexts:
+- context:
+    cluster: "Default"
+    user: "Default"
+  name: "Default"
+current-context: "Default"
+users:
+- name: "Default"
+  user:
+    username: "81D4791EE6153EC25883"
+    password: "ry3uypAMmWo27VPzhUj5Ecp5PkdHk5szQ7CHaBFz"
