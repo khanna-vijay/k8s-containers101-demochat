@@ -5,6 +5,7 @@ replicaCount: 1
 repositoryRaw: razielt/demochat
 imageTag: helm
 serviceType: NodePort
+imagePullSecret: empty
 image:
   repository: razielt/demochat
   tag: helm
