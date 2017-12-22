@@ -2,7 +2,7 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 replicaCount: 1
-appversion: 9
+appversion: 10
 build : "1"
 test:
   key: "value2"
