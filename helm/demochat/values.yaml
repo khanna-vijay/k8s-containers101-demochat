@@ -4,6 +4,7 @@
 replicaCount: 1
 repositoryRaw: razielt/demochat
 imageTag: helm
+serviceType: NodePort
 image:
   repository: razielt/demochat
   tag: helm
