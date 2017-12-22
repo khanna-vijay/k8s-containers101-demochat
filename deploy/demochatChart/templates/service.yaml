@@ -3,12 +3,12 @@ kind: Service
 metadata:
   name: {{ .Values.service.name}}
   labels:
-    #app: {{ template "name" . }}
+    app: {{ template "name" . }}
     #chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     #release: {{ .Release.Name }}
     #heritage: {{ .Release.Service }}
-    sha: {{ .Values.commit.sha }}
-    branch: "{{ .Values.commit.branch }}"
+    #sha: {{ .Values.commit.sha }}
+    #branch: "{{ .Values.commit.branch }}"
     #repo: "{{ .Values.commit.repo }}"
 spec:
   type: {{ .Values.service.type }}
