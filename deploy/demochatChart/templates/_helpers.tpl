@@ -13,7 +13,7 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{/* KUBECON_DEMOCHAT_SERVICE_HOST */}}
 {{- define "demochat" -}}
 {{- $service :=default .Release.Name -}}
-{{- printf "%s_DEMOCHAT_SERVICE_HOST" .Release.Name| upper -}}
+{{- printf "%s_DEMOCHAT_SERVICE_HOST" .Release.Namespace| upper -}}
 {{- end -}}
 {{- define "fullname" -}}
 {{- $name := default .Chart.Name .Values.nameOverride -}}
