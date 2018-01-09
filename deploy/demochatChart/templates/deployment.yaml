@@ -18,7 +18,7 @@ spec:
       #  imageinfo : {{.Values.test.key}}
         appversion: "{{.Values.appversion}}"
     spec:
-        {{- if .Values.image.cfcr w}}
+        {{- if .Values.image.cfcr }}
         imagePullSecrets:
         - name: cfcr
         {{- end }}
