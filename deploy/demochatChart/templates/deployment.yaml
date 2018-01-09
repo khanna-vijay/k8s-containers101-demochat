@@ -25,7 +25,7 @@ spec:
           env:
               - name : MONGO_HELM
                 value: {{.Release.Name }}-mongodb
-          {{-if .Value.image.secret}}
+          {{- if .Values.image.cfcr}}
           imagePullSecrets:
               - name: cfcr
            {{- end }}

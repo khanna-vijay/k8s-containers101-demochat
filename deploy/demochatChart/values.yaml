@@ -11,6 +11,7 @@ image:
   repository: containers101/demochat
   tag: master
   pullPolicy: Always
+  cfcr: true
 test:
   image: mwendler/wget
   timeout :  5 # number of seconds for reconnect
