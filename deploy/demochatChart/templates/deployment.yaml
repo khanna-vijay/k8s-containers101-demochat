@@ -18,6 +18,10 @@ spec:
       #  imageinfo : {{.Values.test.key}}
         appversion: "{{.Values.appversion}}"
     spec:
+        {{- if .Values.image.cfcr w}}
+        imagePullSecrets:
+        - name: cfcr
+        {{- end }}
         containers:
         - image: {{.Values.image.repository}}:{{.Values.image.tag}}
           name: app
@@ -25,10 +29,6 @@ spec:
           env:
               - name : MONGO_HELM
                 value: {{.Release.Name }}-mongodb
-          {{- if .Values.image.cfcr}}
-        imagePullSecrets:
-              - name: cfcr
-           {{- end }}
           ports:
             - containerPort: {{ .Values.service.internalPort }}
           resources:
