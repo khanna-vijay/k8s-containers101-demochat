@@ -9,7 +9,7 @@ spec:
   - name: {{ .Release.Name }}-e2e-test
     image: {{ .Values.test.image}}
     command: ["/bin/sh"]
-    args: ["-c" , 'wget --tries {{.Values.test.tries}} $(echo http://{{template "demochathost"}}/login) ']
+    args: ["-c" , 'wget --tries {{.Values.test.tries}} http://$({{template "demochathost"}})/login) ']
         #["bin/sh"]
     #args : ["-c", "sleep 10000"]
         # ["http://{{ .Release.Name }}-demochat/login"]
