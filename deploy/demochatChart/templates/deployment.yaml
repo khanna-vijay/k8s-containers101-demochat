@@ -25,6 +25,10 @@ spec:
           env:
               - name : MONGO_HELM
                 value: {{.Release.Name }}-mongodb
+          {{-if .Value.image.secret}}
+          imagePullSecrets:
+              - name: cfcr
+           {{- end }}
           ports:
             - containerPort: {{ .Values.service.internalPort }}
           resources:
