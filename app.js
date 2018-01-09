@@ -312,11 +312,15 @@ try{
 
     mongoose.connection.on('error', function (err) {
         console.log(chalk.red(`connection on error ${err}`));
+        if (process.env.MONGO_HELM)
+             process.exit(1);
         callback(err);
     });
 
     mongoose.connection.on('disconnected', function (err) {
         console.log(`disconnected from database error : ${err}`);
+        if (process.env.MONGO_HELM)
+             process.exit(1);
           callback("error");
     });
 }catch(e){
