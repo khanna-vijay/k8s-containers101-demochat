@@ -26,7 +26,7 @@ spec:
               - name : MONGO_HELM
                 value: {{.Release.Name }}-mongodb
           {{- if .Values.image.cfcr}}
-          imagePullSecrets:
+        imagePullSecrets:
               - name: cfcr
            {{- end }}
           ports:
