@@ -2,13 +2,14 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 replicaCount: 1
+imagePullSecret: codefresh-generated-r.cfcr.io-cfcr-default
 image:
-  repository: razielt/demochat
-  tag: helm
+  repository: r.cfcr.io/razielt77_github/containers101/demochat
+  tag: master
   pullPolicy: IfNotPresent
 service:
   name: demochat
-  type: NodePort
+  type: LoadBalancer
   externalPort: 5000
   internalPort: 5000
 ingress:

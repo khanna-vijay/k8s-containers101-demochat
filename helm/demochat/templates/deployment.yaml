@@ -4,17 +4,20 @@ metadata:
   name: {{.Release.Name}}
   labels:
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    app: {{.Release.Name}}
 spec:
   replicas: {{ .Values.replicaCount }}
   template:
     metadata:
       labels:
         app: {{.Release.Name}}
+        release: {{.Release.Name}}
+        heritage: Tiller
     spec:
       {{- if .Values.imagePullSecret }}
       imagePullSecrets:
       - name: "{{.Values.imagePullSecret}}"
-      {{- end }}    
+      {{- end }}
       containers:
       - name: {{.Release.Name}}
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -24,12 +27,4 @@ spec:
         env:
         - name: MONGO_HELM
           value: "{{.Release.Name}}-mongo"
-#        livenessProbe:
-#          httpGet:
-#            path: /
-#            port: {{ .Values.service.internalPort }}
-#        readinessProbe:
-#          httpGet:
-#            path: /
-#            port: {{ .Values.service.internalPort }}
-#        resources:
+

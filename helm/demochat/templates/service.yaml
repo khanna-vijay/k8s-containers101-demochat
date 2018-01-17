@@ -4,6 +4,9 @@ metadata:
   name: {{.Release.Name}}
   labels:
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    app: {{.Release.Name}}
+    release: {{.Release.Name}}
+    heritage: Tiller
 spec:
   type: {{ .Values.service.type }}
   ports:
