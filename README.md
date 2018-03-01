@@ -1,5 +1,8 @@
 ![Let's Chat Greylock](https://codefresh.io/wp-content/uploads/2017/03/lets-chat.png)
 
+[![Codefresh build status]( https://g.codefresh.io/api/badges/build?repoOwner=containers101&repoName=demochat&branch=helm-bitbucket-merge&pipelineName=helm-staging&accountName=jfrog-azure-demo&type=cf-1)]( https://g.codefresh.io/repositories/containers101/demochat/builds?filter=trigger:build;branch:helm-bitbucket-merge;service:5a67d85fa6f54e0001cc35c2~helm-staging)
+
+[![Codefresh Helm Release Status]( https://g.codefresh.io/api/badges/release?type=cf-1&key=eyJhbGciOiJIUzI1NiJ9.NWE2Mjk0Y2RhZTQ0OGMwMDAxYzcxZDBl.MC0PNxVmuN2BbOVCKcppTc_2SXgow6CsKlYcaVj82kU&selector=helmdemo@jFrog-Helm&name=demochat&tillerNamespace=kube-system)]( https://g.codefresh.io/helm/releases/helmdemo@jFrog-Helm/kube-system/demochat/services) 
 
 Use this tutorial to familiarize yourself with codefresh.yml file and Codefresh functionality.
 
