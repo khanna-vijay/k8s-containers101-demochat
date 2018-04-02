@@ -90,7 +90,7 @@ Released under [the MIT license][license].
 [install-vagrant]: https://github.com/sdelements/lets-chat/wiki/Vagrant
 
 
-
+ 
 
 
 ![Let's Chat Greylock](https://codefresh.io/wp-content/uploads/2017/03/lets-chat.png)
