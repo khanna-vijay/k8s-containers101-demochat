@@ -49,8 +49,6 @@ steps:
           - CONSOLE_PORT=${{CONSOLE_PORT}} # Required
           - CONSOLE_USERNAME=${{CONSOLE_USERNAME}} # Required
           - CONSOLE_PASSWORD=${{CONSOLE_PASSWORD}} # Required
-          - COMPLIANCE_THRESHOLD=${{COMPLIANCE_THRESHOLD}} # Optional Example
-          - VULNERABILITY_THRESHOLD=${{VULNERABILITY_THRESHOLD}} # Optional Example
           - DETAILS=true
         command: python /twistlock-cli.py "docker inspect $$(docker inspect $$(docker ps -aqf label=build.image.id=${{CF_BUILD_ID}}) -f {{.Config.Image}}) -f {{.Id}} | sed 's/sha256://g'"
         depends_on:

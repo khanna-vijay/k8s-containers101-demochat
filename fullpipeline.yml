@@ -11,7 +11,7 @@ steps:
     title: Running Unit Tests
     image: '${{BuildingDockerImage}}'
     working_directory: IMAGE_WORK_DIR
-    commands: 
+    commands:
       - bash unit_test.sh
     on_success:
       metadata:
@@ -22,7 +22,7 @@ steps:
       metadata:
         set:
           - '${{BuildingDockerImage.imageId}}':
-              - CF_QUALITY: false  
+              - CF_QUALITY: false
   RunningPerformanceTests:
     title: Running Performance Tests
     type: composition
@@ -41,14 +41,14 @@ steps:
         command: bash runtests
         environment:
           - CF_VOLUME_PATH=${{CF_VOLUME_PATH}}
-          - TOKEN=${{TOKEN}} 
+          - TOKEN=${{TOKEN}}
         volumes:
          - '${{CF_VOLUME_NAME}}:/codefresh/volume'
     add_flow_volume_to_composition: true
     when:
       condition:
         all:
-          testresults: '"${{FAIL}}" == "0"' 
+          testresults: '"${{FAIL}}" == "0"'
     on_success:
       metadata:
         set:
@@ -80,8 +80,6 @@ steps:
           - CONSOLE_PORT=${{CONSOLE_PORT}} # Required
           - CONSOLE_USERNAME=${{CONSOLE_USERNAME}} # Required
           - CONSOLE_PASSWORD=${{CONSOLE_PASSWORD}} # Required
-          - COMPLIANCE_THRESHOLD=${{COMPLIANCE_THRESHOLD}} # Optional Example
-          - VULNERABILITY_THRESHOLD=${{VULNERABILITY_THRESHOLD}} # Optional Example
           - DETAILS=true
         command: python /twistlock-cli.py "docker inspect $$(docker inspect $$(docker ps -aqf label=build.image.id=${{CF_BUILD_ID}}) -f {{.Config.Image}}) -f {{.Id}} | sed 's/sha256://g'"
         depends_on:
@@ -137,7 +135,7 @@ steps:
     when:
       condition:
         all:
-          testresults: '"${{FAIL}}" == "1"'   
+          testresults: '"${{FAIL}}" == "1"'
   passfail:
     title: failed
     image: alpine
@@ -149,4 +147,4 @@ steps:
         set:
           - '${{BuildingDockerImage.imageId}}':
               - CF_QUALITY: false
-            
+
