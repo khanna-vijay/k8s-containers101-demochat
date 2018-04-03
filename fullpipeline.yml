@@ -61,7 +61,7 @@ steps:
           - '${{BuildingDockerImage.imageId}}':
               - CF_QUALITY: false
   TwistlockScanImage:
-    title: Running Security Tests
+    title: Running Twistlock Security Tests
     type: composition
     composition:
       version: '2'
