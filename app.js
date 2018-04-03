@@ -290,5 +290,7 @@ mongoose.connect(settings.database.uri, function(err) {
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
+  console.log("404 Error - Starting Trace");
+  console.log(err);
   next(err);
 });
