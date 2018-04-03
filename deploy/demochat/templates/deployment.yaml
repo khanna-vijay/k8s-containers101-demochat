@@ -17,6 +17,10 @@ spec:
         release: {{ .Release.Name }}
         appversion: "{{.Values.appversion}}"
     spec:
+        {{- if .Values.image.pullSecret }}
+        imagePullSecrets:
+          - name: {{ .Values.image.pullSecret }}
+        {{- end }}
         containers:
         - image: {{.Values.image.repository}}:{{.Values.image.tag}}
           name: app
