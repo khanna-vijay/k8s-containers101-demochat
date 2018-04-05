@@ -288,10 +288,12 @@ mongoose.connect(settings.database.uri, function(err) {
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
+  console.log("404 Error '" + req.originalUrl + "' Not found - Starting Trace");
   var err = new Error('Not Found');
   err.status = 404;
-  console.log("404 Error '" + req.originalUrl + "' Not found - Starting Trace");
+  console.log("output req");
   console.log(req);
+  console.log("output err");
   console.log(err);
   next(err);
 });
