@@ -73,7 +73,7 @@ steps:
             build.image.id: ${{CF_BUILD_ID}} # Provides a lookup for the composition
     composition_candidates:
       scan_service:
-        image: codefresh/docker-twistcli:latest # Recommend replacing with current Twistlock Console version
+        image: sctechdev/docker-twistcli:latest # Recommend replacing with current Twistlock Console version
         environment: # Add only the Environment Variables you need
           - CODEFRESH_CLI_KEY=${{CODEFRESH_CLI_KEY}} # Required
           - CONSOLE_HOSTNAME=${{CONSOLE_HOSTNAME}} # Required
